@@ -8,3 +8,17 @@
 html{
   scroll-behavior: smooth;
 }
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.float-animation{
+  animation: floatAnimation 2s ease-in-out infinite;
+}
