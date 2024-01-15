@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Nav from "../components/Nav";
-import Img from "../assets/img/home-img.png";
+import Img from "../assets/img/home-img.webp";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
