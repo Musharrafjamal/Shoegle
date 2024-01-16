@@ -9,7 +9,7 @@ import { useSelector }from "react-redux"
 const Nav = ({ alternate, btns }) => {
   const itemCount = useSelector(state => state.counter)
   return (
-    <header className="flex justify-between items-center px-12 py-5">
+    <header className="flex justify-between items-center px-12 py-5 sticky z-20 top-0">
       <Link to="/">
         <img src={logo} alt="" className="w-[3rem] h-[3rem]" />
         <span>Shoegle</span>
