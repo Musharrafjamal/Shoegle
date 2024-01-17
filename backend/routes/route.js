@@ -3,26 +3,23 @@ const ItemModel = require("../model/itemModel");
 
 const router = express.Router();
 
-router.post("/add", async (req, res) => {
+router.post("/add-product", async (req, res) => {
   try {
-    const { name, price } = req.body;
+    const { name, price, description, images } = req.body;
     const item = new ItemModel({
       name,
+      description,
       price,
+      images,
     });
-    await item.save();
-    res.status(200).send("Product added successfully!");
+    const savedItem = await item.save();
+    // console.log(savedItem)
+    res.status(201).json(savedItem);
   } catch (err) {
     console.log("Error on Adding product: ", err.message);
   }
 });
 
-router.get("/get", async (req, res) => {
-  try {
-    res.status(200).send("Get product route working fine!");
-  } catch (err) {
-    console.log("Error on Adding product: ", err.message);
-  }
-});
+
 
 module.exports = router;

@@ -5,9 +5,14 @@ const itemSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  description: String,
   price: {
     type: String,
     require: true,
+  },
+  images: {
+    type: Array,
+    default: [],
   },
   rating: {
     type: String,
