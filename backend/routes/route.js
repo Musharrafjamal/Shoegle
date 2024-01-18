@@ -5,12 +5,13 @@ const router = express.Router();
 
 router.post("/add-product", async (req, res) => {
   try {
-    const { name, price, description, images } = req.body;
+    const { name, price, description, images, reviews } = req.body;
     const item = new ItemModel({
       name,
       description,
       price,
       images,
+      reviews,
     });
     const savedItem = await item.save();
     // console.log(savedItem)
@@ -20,6 +21,29 @@ router.post("/add-product", async (req, res) => {
   }
 });
 
+router.get("/get-item", async (req, res) => {
+  try {
+    const items = await ItemModel.find();
+    res.status(200).json(items);
+  } catch (err) {
+    res.status(404).json("error on getting items: ", err.message);
+  }
+});
 
+router.post("/get-cart-item", async (req, res) => {
+  try {
+    const arrayOfId = req.body.id;
+
+    const arrayOfItem = await Promise.all(
+      arrayOfId.map(async (id) => {
+        const item = await ItemModel.findById(id);
+        return item;
+      })
+    );
+    res.status(200).json(arrayOfItem);
+  } catch (err) {
+    res.status(500).json({ error: "Error on getting items", message: err.message });
+  }
+});
 
 module.exports = router;

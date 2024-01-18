@@ -1,16 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PrimaryBtn from "./PrimaryBtn";
 import { IoIosStar, IoIosStarHalf } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
 import { FaCartPlus } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { increment } from "../redux/itemCounterSlice";
-import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
-const PrimaryProductCard = ({ items }) => {
-  const dispatch = useDispatch();
+const PrimaryProductCard = () => {
+  const [fetchItems, setFetchItem] = useState([]);
+  const localUrlGetItem = "http://localhost:8000/get-item";
 
+  const fetchItem = async () => {
+    const items = await axios.get(localUrlGetItem);
+    setFetchItem(items.data);
+    // console.log(fetchItems);
+  };
   useEffect(() => {
     AOS.init(
       {
@@ -23,14 +28,28 @@ const PrimaryProductCard = ({ items }) => {
         }
       }
     );
+
+    fetchItem();
   }, []);
+  const [idArray, setIdArray] = useState(
+    JSON.parse(localStorage.getItem("idArray")) !== null
+      ? JSON.parse(localStorage.getItem("idArray"))
+      : []
+  );
+
+  const handleItemTOAddInCart = (id) => {
+    setIdArray((prev) => [...prev, id]);
+  };
+  useEffect(() => {
+    localStorage.setItem("idArray", JSON.stringify(idArray));
+  }, [idArray]);
   return (
     <>
-      {items.map((item, index) => {
+      {fetchItems.map((item, index) => {
         return (
-          <div key={index} className="flex gap-2" data-aos="fade-up">
+          <div key={index} className="flex gap-2" data-aos="fade-in">
             <img
-              src={item.img}
+              src={item.images[0]}
               alt=""
               className="w-1/3 aspect-square object-cover rounded-lg"
             />
@@ -53,10 +72,10 @@ const PrimaryProductCard = ({ items }) => {
                 })}
                 <span className="text-sm">({item.reviews} reviews)</span>
               </div>
-              <p>${item.price}</p>
+              <p>₹{item.price}</p>
               <div
                 onClick={() => {
-                  dispatch(increment());
+                  handleItemTOAddInCart(item._id);
                 }}
               >
                 <PrimaryBtn icon={<FaCartPlus size={20} />} />

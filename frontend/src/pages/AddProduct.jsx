@@ -17,7 +17,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const AddProduct = () => {
   const count = useSelector((state) => state.counter);
-  const [productData, setProductData] = useState({});
+  const [productData, setProductData] = useState({reviews: 0});
 
   const navigate = useNavigate();
   const btns = [
@@ -47,7 +47,7 @@ const AddProduct = () => {
   };
   const localUrl = "http://localhost:8000/add-product";
 
-const handleUpload = async () => {
+  const handleUpload = async () => {
     const uploadPromises = imageList.map((image) => {
       const imageRef = ref(
         storage,
@@ -57,26 +57,42 @@ const handleUpload = async () => {
         return getDownloadURL(snapshot.ref);
       });
     });
-    
+
     // Wait for all image uploads to complete
     return Promise.all(uploadPromises);
   };
-  
+  const [loading, setLoading] = useState(false);
   const handleAddData = async () => {
     try {
+      setLoading(true);
       const uploadedImageUrls = await handleUpload();
-      const data = await axios.post(localUrl, {...productData, images: uploadedImageUrls});
+      const data = await axios.post(localUrl, {
+        ...productData,
+        images: uploadedImageUrls,
+      });
       console.log("Product added successfully: ", data.data);
       setProductId(data.data._id);
+      setImageList([])
+      setLoading(false);
     } catch (err) {
       console.log("Error on adding product", err.message);
     }
   };
-  
+
   return (
     <>
       <Nav alternate={true} btns={btns} />
-      <main className="pl-12 flex flex-col gap-8 py-8">
+      {loading ? (
+        <div className="h-screen flex justify-center items-center">
+          <div className="loader">
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="circle"></div>
+          </div>
+        </div>
+      ) : (
+        <main className="pl-12 flex flex-col gap-8 py-8">
         <div className="flex items-center gap-4 text-stone-800">
           <Link to={"/"} title="Home">
             <FaArrowLeftLong />
@@ -189,17 +205,22 @@ const handleUpload = async () => {
               </div>
             )}
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded text-sm"
               onClick={handleAddData}
             >
               Add product
             </button>
-            <button className="text-red-500 font-medium">Discard</button>
+            <Link to={"/"}>
+              <button className="text-red-500 font-medium">Discard</button>
+            </Link>
           </div>
         </div>
       </main>
+      )}
+
+      
     </>
   );
 };

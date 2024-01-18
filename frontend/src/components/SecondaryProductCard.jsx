@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PrimaryBtn from "./PrimaryBtn";
 import { IoIosStar, IoIosStarHalf } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaCartPlus } from "react-icons/fa6";
-import { increment } from "../redux/itemCounterSlice";
-import { useDispatch } from "react-redux";
+import axios from "axios";
 
-const SecondaryProductCard = ({ items }) => {
-  const dispatch = useDispatch();
+const SecondaryProductCard = () => {
+  const [fetchItems, setFetchItem] = useState([]);
+  const localUrlGetItem = "http://localhost:8000/get-item";
+
+  const fetchItem = async () => {
+    const items = await axios.get(localUrlGetItem);
+    setFetchItem(items.data);
+  };
   useEffect(() => {
     AOS.init(
       {
@@ -22,10 +27,24 @@ const SecondaryProductCard = ({ items }) => {
         }
       }
     );
+
+    fetchItem();
   }, []);
+  const [idArray, setIdArray] = useState(
+    JSON.parse(localStorage.getItem("idArray")) !== null
+      ? JSON.parse(localStorage.getItem("idArray"))
+      : []
+  );
+
+  const handleItemTOAddInCart = (id) => {
+    setIdArray((prev) => [...prev, id]);
+  };
+  useEffect(() => {
+    localStorage.setItem("idArray", JSON.stringify(idArray));
+  }, [idArray]);
   return (
     <>
-      {items.map((item, index) => {
+      {fetchItems.map((item, index) => {
         return (
           <div
             data-aos="zoom-in"
@@ -50,7 +69,7 @@ const SecondaryProductCard = ({ items }) => {
               <span className="text-sm">({item.reviews} reviews)</span>
             </div>
             <img
-              src={item.img}
+              src={item.images[0]}
               alt={item.name}
               className="w-full aspect-square object-cover rounded-lg"
             />
@@ -58,9 +77,14 @@ const SecondaryProductCard = ({ items }) => {
               <h2 className="text-xl font-semibold text-stone-800">
                 {item.name}
               </h2>
-              <p className="text-right">${item.price}</p>
+              <p className="text-right">₹{item.price}</p>
             </div>
-            <div onClick={() => dispatch(increment())} className="w-full">
+            <div
+              onClick={() => {
+                handleItemTOAddInCart(item._id);
+              }}
+              className="w-full"
+            >
               <PrimaryBtn icon={<FaCartPlus size={20} />} />
             </div>
           </div>

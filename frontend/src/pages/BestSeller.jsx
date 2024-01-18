@@ -1,33 +1,13 @@
 import React, { useEffect } from "react";
 import Banner from "../components/Banner";
-import img1 from "../assets/stock-images/1.webp";
-import img2 from "../assets/stock-images/2.webp";
-import img3 from "../assets/stock-images/3.webp";
-import img4 from "../assets/stock-images/4.webp";
-import img5 from "../assets/stock-images/5.webp";
-import img6 from "../assets/stock-images/6.webp";
-import img7 from "../assets/stock-images/7.webp";
-import img8 from "../assets/stock-images/8.webp";
-import PrimaryBtn from "../components/PrimaryBtn";
-import { IoIosStar, IoIosStarHalf } from "react-icons/io";
-import { IoIosStarOutline } from "react-icons/io";
 import AOS from "aos"
 import "aos/dist/aos.css";
 import SecondaryBtn from "../components/SecondaryBtn";
 import Footer from "../components/Footer"
-import { FaCartPlus } from "react-icons/fa6";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import PrimaryProductCard from "../components/PrimaryProductCard";
 
 const BestSeller = () => {
-  const items = [
-    { name: "Green sneaker", price: 45, img: img1, stars: 3.5, reviews: 72 },
-    { name: "Green sneaker", price: 70, img: img2, stars: 5.0, reviews: 142 },
-    { name: "Green sneaker", price: 35, img: img3, stars: 4.0, reviews: 47 },
-    { name: "Green sneaker", price: 40, img: img4, stars: 3.5, reviews: 72 },
-    { name: "Green sneaker", price: 42, img: img5, stars: 2.5, reviews: 122 },
-    { name: "Green sneaker", price: 32, img: img6, stars: 4.5, reviews: 90 },
-
-  ];
   useEffect(() => {
     AOS.init(
       {
@@ -45,37 +25,7 @@ const BestSeller = () => {
     <>
       <Banner heading={"Best seller"} data-aos="flip-left" />
       <div className="grid grid-cols-3 py-12 px-20 gap-x-8 gap-y-16 ">
-        {items.map((item, index) => {
-          return (
-            <div key={index} className="flex gap-2" data-aos="flip-left">
-              <img src={item.img} alt="" className="w-1/3 aspect-square object-cover rounded-lg" />
-              <div className="flex flex-col justify-center gap-1 ">
-                <span className="text-lg font-semibold">{item.name}</span>
-                <div className="flex">
-                  {Array.from({ length: 5 }, (e, index) => {
-                    let stars = item.stars;
-                    return (
-                      <span key={index} className="text-yellow-500">
-                        {stars >= index + 1 ? (
-                          <IoIosStar />
-                        ) : stars >= index + 0.5 ? (
-                          <IoIosStarHalf />
-                        ) : (
-                          <IoIosStarOutline />
-                        )}
-                      </span>
-                    );
-                  })}
-                  <span className="text-sm">({item.reviews} reviews)</span>
-                </div>
-                <p>${item.price}</p>
-                <div>
-                <PrimaryBtn icon={<FaCartPlus size={20} />} />
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        <PrimaryProductCard />
       </div>
       <div className=" flex justify-center pb-10">
         <span className="w-1/6">

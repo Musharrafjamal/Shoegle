@@ -46,7 +46,7 @@ const Nav = ({ alternate, btns }) => {
           </Link>
           <div className="w-20">
             <SecondaryBtn
-                content={`Cart ${itemCount}`}
+                content={`Cart ${JSON.parse(localStorage.getItem("idArray")).length}`}
                 icon={<FaCartShopping />}
                 linkTag={true}
                 destination={"/cart"}
