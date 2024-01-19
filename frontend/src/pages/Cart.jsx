@@ -40,7 +40,7 @@ const Cart = () => {
     // Left to work on the quantity manage section!!!!!!!!!!!!!
 
     const originalArray = JSON.parse(localStorage.getItem("idArray"));
-    const uniqueArray = Array.from(new Set(originalArray)); // Remove duplicates
+    const uniqueArray = Array.from(new Set(originalArray));
     const duplicateArray = originalArray.filter(
       (id, index) => originalArray.indexOf(id) !== index
     );
