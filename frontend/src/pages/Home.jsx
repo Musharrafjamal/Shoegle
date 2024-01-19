@@ -20,7 +20,7 @@ const Home = () => {
   }, []);
   return (
     <div className="h-screen bg-gradient-to-b from-transparent relative to-[rgba(0,0,0,0.4)]">
-      <Nav />
+      {/* <Nav /> */}
       <img data-aos="fade-down" src={Img} alt="" className="w-1/3 absolute top-2/6 left-1/3 -z-10 float-animation" />
       <div className="flex justify-center items-center h-4/6 ">
         <span
