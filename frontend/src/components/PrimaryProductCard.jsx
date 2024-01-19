@@ -6,15 +6,17 @@ import { FaCartPlus } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { updateArray } from "../redux/arrayOfId";
 
 const PrimaryProductCard = () => {
   const [fetchItems, setFetchItem] = useState([]);
   const localUrlGetItem = "http://localhost:8000/get-item";
+  const dispatch = useDispatch();
 
   const fetchItem = async () => {
     const items = await axios.get(localUrlGetItem);
     setFetchItem(items.data);
-    // console.log(fetchItems);
   };
   useEffect(() => {
     AOS.init(
@@ -31,6 +33,9 @@ const PrimaryProductCard = () => {
 
     fetchItem();
   }, []);
+
+
+
   const [idArray, setIdArray] = useState(
     JSON.parse(localStorage.getItem("idArray")) !== null
       ? JSON.parse(localStorage.getItem("idArray"))
@@ -42,6 +47,7 @@ const PrimaryProductCard = () => {
   };
   useEffect(() => {
     localStorage.setItem("idArray", JSON.stringify(idArray));
+    dispatch(updateArray(idArray));
   }, [idArray]);
   return (
     <>

@@ -1,11 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit"
-import itemCounterReducer from "./itemCounterSlice"
-
+import { configureStore } from "@reduxjs/toolkit";
+import arrayOfId from "./arrayOfId";
+import itemCounterReducer from "./itemCounterSlice";
 
 const store = configureStore({
-    reducer: {
-        counter: itemCounterReducer
-    }
-})
+  reducer: {
+    counter: itemCounterReducer,
+    arrayOfId,
+  },
+});
 
-export default store
+export default store;

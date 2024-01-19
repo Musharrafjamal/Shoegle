@@ -4,22 +4,18 @@ import { Link } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 import Buttons from "./Buttons";
 import SecondaryBtn from "./SecondaryBtn";
+import { useSelector } from "react-redux";
 
 const Nav = ({ alternate, btns }) => {
-  const [cartCounting, setCartCounting] = useState();
+  const [cartCounting, setCartCounting] = useState(0);
 
+  const myArray = useSelector((state) => state.arrayOfId.myArray);
   useEffect(() => {
-    const storedIdArray = JSON.parse(localStorage.getItem("idArray"));
-    
-    if (Array.isArray(storedIdArray) && storedIdArray.length > 0) {
-      // If it's an array and not empty
-      const uniqueCartItemArray = Array.from(new Set(storedIdArray));
+    if (Array.isArray(myArray) && myArray.length > 0) {
+      const uniqueCartItemArray = Array.from(new Set(myArray));
       setCartCounting(uniqueCartItemArray.length);
-    } else {
-      // Handle the case when the storedIdArray is not an array or is empty
-      setCartCounting("");
     }
-  }, []);
+  }, [myArray.length]);
 
   return (
     <header className="flex justify-between items-center px-12 py-5">

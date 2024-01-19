@@ -39,6 +39,7 @@ const Cart = () => {
     fetchItem();
 
     // Left to work on the quantity manage section!!!!!!!!!!!!!
+    // Left to work on the remove item from redux-state!!!!!!!!!!!!!
 
     const originalArray = JSON.parse(localStorage.getItem("idArray"));
     const uniqueArray = Array.from(new Set(originalArray));
@@ -53,9 +54,10 @@ const Cart = () => {
 
   const handleRemoveItem = (id) => {
     const currentArray = JSON.parse(localStorage.getItem("idArray"));
-    const newArray = currentArray.filter((e, i) => e !== id);
+    const newArray = fetchItems.filter((e, i) => e._id !== id);
+    setFetchItem(newArray)
     localStorage.setItem("idArray", JSON.stringify(newArray));
-    fetchItem();
+    // fetchItem();
   };
   return (
     <>
