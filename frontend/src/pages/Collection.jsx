@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import SecondaryBtn from "../components/SecondaryBtn";
 import Footer from "../components/Footer";
 import { FaCartShopping } from "react-icons/fa6";
 import PrimaryProductCard from "../components/PrimaryProductCard";
-import {useSelector} from "react-redux"
 
 const Collection = () => {
-  const count = useSelector(state => state.counter)
+  const [cartCounting, setCartCounting] = useState();
 
+  useEffect(() => {
+    const storedIdArray = JSON.parse(localStorage.getItem("idArray"));
+    
+    if (Array.isArray(storedIdArray) && storedIdArray.length > 0) {
+      // If it's an array and not empty
+      const uniqueCartItemArray = Array.from(new Set(storedIdArray));
+      setCartCounting(uniqueCartItemArray.length);
+    } else {
+      // Handle the case when the storedIdArray is not an array or is empty
+      setCartCounting("");
+    }
+  }, []);
+  
   const btns = [
     {
       content: "Home",
@@ -18,7 +30,7 @@ const Collection = () => {
       width: "w-24",
     },
     {
-      content: `Cart ${JSON.parse(localStorage.getItem("idArray")).length}`,
+      content: `Cart ${cartCounting}`,
       destination: "/cart",
       linkTag: true,
       icon: <FaCartShopping />,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/logo/running.png";
 import { Link } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
@@ -6,7 +6,21 @@ import Buttons from "./Buttons";
 import SecondaryBtn from "./SecondaryBtn";
 
 const Nav = ({ alternate, btns }) => {
-  const cartItem = JSON.parse(localStorage.getItem("idArray")).length || ''
+  const [cartCounting, setCartCounting] = useState();
+
+  useEffect(() => {
+    const storedIdArray = JSON.parse(localStorage.getItem("idArray"));
+    
+    if (Array.isArray(storedIdArray) && storedIdArray.length > 0) {
+      // If it's an array and not empty
+      const uniqueCartItemArray = Array.from(new Set(storedIdArray));
+      setCartCounting(uniqueCartItemArray.length);
+    } else {
+      // Handle the case when the storedIdArray is not an array or is empty
+      setCartCounting("");
+    }
+  }, []);
+
   return (
     <header className="flex justify-between items-center px-12 py-5">
       <Link to="/">
@@ -15,7 +29,7 @@ const Nav = ({ alternate, btns }) => {
       </Link>
       {alternate ? (
         <nav className="flex gap-4 justify-center items-center text-stone-700 ">
-          <Buttons btns={btns}/>
+          <Buttons btns={btns} />
         </nav>
       ) : (
         <nav className="flex gap-8 justify-center items-center">
@@ -45,11 +59,11 @@ const Nav = ({ alternate, btns }) => {
           </Link>
           <div className="w-20">
             <SecondaryBtn
-                content={`Cart ${cartItem}`}
-                icon={<FaCartShopping />}
-                linkTag={true}
-                destination={"/cart"}
-              />
+              content={`Cart ${cartCounting}`}
+              icon={<FaCartShopping />}
+              linkTag={true}
+              destination={"/cart"}
+            />
           </div>
         </nav>
       )}

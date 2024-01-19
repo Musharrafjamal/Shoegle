@@ -29,9 +29,10 @@ const Cart = () => {
   const [fetchItems, setFetchItem] = useState([]);
   const localUrlGetItem = "http://localhost:8000/get-cart-item";
 
+  const arrayOfId = JSON.parse(localStorage.getItem("idArray"));
+  const uniqueArrayOfId = Array.from(new Set(arrayOfId));
   const fetchItem = async () => {
-    const arrayOfId = JSON.parse(localStorage.getItem("idArray"));
-    const items = await axios.post(localUrlGetItem, { id: arrayOfId });
+    const items = await axios.post(localUrlGetItem, { id: uniqueArrayOfId });
     setFetchItem(items.data);
   };
   useEffect(() => {
@@ -41,12 +42,13 @@ const Cart = () => {
 
     const originalArray = JSON.parse(localStorage.getItem("idArray"));
     const uniqueArray = Array.from(new Set(originalArray));
+
     const duplicateArray = originalArray.filter(
       (id, index) => originalArray.indexOf(id) !== index
     );
 
-    console.log("Unique IDs:", uniqueArray);
-    console.log("Duplicate IDs:", duplicateArray);
+    // console.log("Unique IDs:", uniqueArray);
+    // console.log("Duplicate IDs:", duplicateArray);
   }, []);
 
   const handleRemoveItem = (id) => {
@@ -65,11 +67,10 @@ const Cart = () => {
               Shpping cart
             </span>
             <span className="text-2xl font-semibold text-stone-800">
-              {JSON.parse(localStorage.getItem("idArray")).length} Items
+              {uniqueArrayOfId.length} Items
             </span>
           </div>
-          <span className="w-10 h-12 bg-black"></span>
-          <div className="flex flex-col gap-6 pt-8">
+          <div className="flex flex-col gap-6 py-8">
             <div className="flex px-10 justify-between text-stone-700">
               <span className="w-2/5">Product List</span>
               <span className="w-1/5 text-center">Quantity</span>
