@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 import Buttons from "./Buttons";
 import SecondaryBtn from "./SecondaryBtn";
-import { useSelector }from "react-redux"
 
 const Nav = ({ alternate, btns }) => {
-  const itemCount = useSelector(state => state.counter)
+  const cartItem = JSON.parse(localStorage.getItem("idArray")).length || ''
   return (
     <header className="flex justify-between items-center px-12 py-5">
       <Link to="/">
@@ -46,7 +45,7 @@ const Nav = ({ alternate, btns }) => {
           </Link>
           <div className="w-20">
             <SecondaryBtn
-                content={`Cart ${JSON.parse(localStorage.getItem("idArray")).length}`}
+                content={`Cart ${cartItem}`}
                 icon={<FaCartShopping />}
                 linkTag={true}
                 destination={"/cart"}
