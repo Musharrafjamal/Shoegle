@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 const itemSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   description: String,
   price: {
     type: String,
-    require: true,
+    required: true,
   },
   images: {
     type: Array,
@@ -16,11 +16,11 @@ const itemSchema = new mongoose.Schema({
   },
   rating: {
     type: String,
-    require: true,
+    required: true,
   },
   reviews: {
     type: String,
-    require: true,
+    required: true,
   },
 });
 

@@ -12,10 +12,11 @@ import { updateArray } from "../redux/arrayOfId";
 const PrimaryProductCard = () => {
   const [fetchItems, setFetchItem] = useState([]);
   const localUrlGetItem = "http://localhost:8000/get-item";
+  const webGetItem = "https://shoegle-production.up.railway.app/get-item";
   const dispatch = useDispatch();
 
   const fetchItem = async () => {
-    const items = await axios.get(localUrlGetItem);
+    const items = await axios.get(webGetItem);
     setFetchItem(items.data);
   };
   useEffect(() => {
@@ -47,7 +48,8 @@ const PrimaryProductCard = () => {
   };
   useEffect(() => {
     localStorage.setItem("idArray", JSON.stringify(idArray));
-    dispatch(updateArray(idArray));
+    const uniqueArray = Array.from(new Set(idArray));
+    dispatch(updateArray(uniqueArray));
   }, [idArray]);
   return (
     <>

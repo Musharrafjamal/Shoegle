@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Nav from "../components/Nav";
 import { useSelector } from "react-redux";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import imgPlaceholder from "../assets/img/img-placeholder.jpeg";
 import axios from "axios";
@@ -19,7 +19,6 @@ const AddProduct = () => {
   const count = useSelector((state) => state.counter);
   const [productData, setProductData] = useState({reviews: 0});
 
-  const navigate = useNavigate();
   const btns = [
     {
       content: "Home",
@@ -46,6 +45,7 @@ const AddProduct = () => {
     setImageList(updatedImageList);
   };
   const localUrl = "http://localhost:8000/add-product";
+  const webGetItem = "https://shoegle-production.up.railway.app/add-product";
 
   const handleUpload = async () => {
     const uploadPromises = imageList.map((image) => {
@@ -66,7 +66,7 @@ const AddProduct = () => {
     try {
       setLoading(true);
       const uploadedImageUrls = await handleUpload();
-      const data = await axios.post(localUrl, {
+      const data = await axios.post(webGetItem, {
         ...productData,
         images: uploadedImageUrls,
       });
