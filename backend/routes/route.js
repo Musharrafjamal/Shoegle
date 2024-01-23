@@ -33,16 +33,17 @@ router.get("/get-item", async (req, res) => {
 router.post("/get-cart-item", async (req, res) => {
   try {
     const arrayOfId = req.body.id;
-
     const arrayOfItem = await Promise.all(
       arrayOfId.map(async (id) => {
-        const item = await ItemModel.findById(id);
+        const item = await ItemModel.findById(id.id);
         return item;
       })
     );
     res.status(200).json(arrayOfItem);
   } catch (err) {
-    res.status(500).json({ error: "Error on getting items", message: err.message });
+    res
+      .status(500)
+      .json({ error: "Error on getting items", message: err.message });
   }
 });
 

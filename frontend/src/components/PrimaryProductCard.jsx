@@ -6,17 +6,17 @@ import { FaCartPlus } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateArray } from "../redux/arrayOfId";
 
 const PrimaryProductCard = () => {
   const [fetchItems, setFetchItem] = useState([]);
-  const localUrlGetItem = "http://localhost:8000/get-item";
-  const webGetItem = "https://shoegle-production.up.railway.app/get-item";
+  const backendUrl = useSelector((state) => state.backendUrlSlice);
+  const getItemUrl = `${backendUrl}/get-item`;
   const dispatch = useDispatch();
 
   const fetchItem = async () => {
-    const items = await axios.get(webGetItem);
+    const items = await axios.get(getItemUrl);
     setFetchItem(items.data);
   };
   useEffect(() => {
@@ -35,8 +35,6 @@ const PrimaryProductCard = () => {
     fetchItem();
   }, []);
 
-
-
   const [idArray, setIdArray] = useState(
     JSON.parse(localStorage.getItem("idArray")) !== null
       ? JSON.parse(localStorage.getItem("idArray"))
@@ -44,13 +42,18 @@ const PrimaryProductCard = () => {
   );
 
   const handleItemTOAddInCart = (id) => {
-    setIdArray((prev) => [...prev, id]);
+    const idWithQuantity = {id, quantity: 1}
+    setIdArray((prev) => [...prev, idWithQuantity]);
   };
   useEffect(() => {
-    localStorage.setItem("idArray", JSON.stringify(idArray));
-    const uniqueArray = Array.from(new Set(idArray));
-    dispatch(updateArray(uniqueArray));
+    const uniqueData = Array.from(new Set(idArray.map(item => item.id))).map(uniqueId => {
+      const itemWithUniqueId = idArray.find(item => item.id === uniqueId);
+      return { id: uniqueId, quantity: itemWithUniqueId.quantity };
+    });
+    localStorage.setItem("idArray", JSON.stringify(uniqueData));
+    dispatch(updateArray(uniqueData));
   }, [idArray]);
+
   return (
     <>
       {fetchItems.map((item, index) => {

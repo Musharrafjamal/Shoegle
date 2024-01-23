@@ -7,7 +7,7 @@ const itemSchema = new mongoose.Schema({
   },
   description: String,
   price: {
-    type: String,
+    type: Number,
     required: true,
   },
   images: {
@@ -15,13 +15,12 @@ const itemSchema = new mongoose.Schema({
     default: [],
   },
   rating: {
-    type: String,
-    required: true,
+    type: Number,
   },
   reviews: {
-    type: String,
+    type: Number,
     required: true,
-  },
+  }
 });
 
 const ItemModel = mongoose.model("Item", itemSchema);
