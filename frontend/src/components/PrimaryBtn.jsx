@@ -8,19 +8,23 @@ const PrimaryBtn = ({
   linkTag = false,
 }) => {
   return linkTag ? (
-    <Link
-      to={destination}
-      className="flex justify-center items-center gap-2 py-2 w-full cursor-pointer bg-stone-700 text-sm text-white rounded hover:scale-95 hover:bg-stone-800 transition-all duration-300"
-    >
-      {content} {icon}
-    </Link>
+    <>
+      <Link
+        to={destination}
+        className="flex justify-center items-center gap-2 py-2 w-full cursor-pointer bg-stone-700 text-sm text-white rounded hover:scale-95 hover:bg-stone-800 transition-all duration-300"
+      >
+        {content} {icon}
+      </Link>
+    </>
   ) : (
-    <a
-      href={destination}
-      className="flex justify-center items-center gap-2 py-2 w-full cursor-pointer bg-stone-700 text-sm text-white rounded hover:scale-95 hover:bg-stone-800 transition-all duration-300"
-    >
-      {content} {icon}
-    </a>
+    <>
+      <a
+        href={destination}
+        className="flex justify-center items-center gap-2 py-2 w-full cursor-pointer bg-stone-700 text-sm text-white rounded hover:scale-95 hover:bg-stone-800 transition-all duration-300"
+      >
+        {content} {icon}
+      </a>
+    </>
   );
 };
 

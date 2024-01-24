@@ -46,5 +46,16 @@ router.post("/get-cart-item", async (req, res) => {
       .json({ error: "Error on getting items", message: err.message });
   }
 });
+router.post("/item", async (req, res) => {
+  try {
+    const id = req.body.id;
+    const item = await ItemModel.findById(id);
+    res.status(200).json(item);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Error on getting items", message: err.message });
+  }
+});
 
 module.exports = router;

@@ -65,11 +65,14 @@ const Cart = () => {
       }
     });
     setMergedData(mergedArray);
+    // console.log(mergedData)
   }, [fetchItems, arrayOfId]);
 
   const handleRemoveItem = (id) => {
-    const newArray = fetchItems.filter((e, i) => e._id !== id);
-    setFetchItem(newArray);
+    const newArray = mergedData.filter((e, i) => e._id !== id);
+    const newArrayOfId = arrayOfId.filter((e, i) => e.id !== id);
+    setArrayOfId(newArrayOfId)
+    setMergedData(newArray);
     dispatch(updateArray(newArray));
     localStorage.setItem("idArray", JSON.stringify(newArray));
   };
@@ -86,6 +89,7 @@ const Cart = () => {
     });
   };
   const handledecreasingQuantity = (oldId, quantity) => {
+    // console.log(arrayOfId)
     setArrayOfId((prevArray) => {
       const updatedQuantity = prevArray.map((item) => {
         if (oldId === item.id && quantity > 1) {
@@ -128,7 +132,7 @@ const Cart = () => {
               Shpping cart
             </span>
             <span className="text-xl font-semibold text-stone-800">
-              {arrayOfId.length} Items
+              {mergedData.length} Items
             </span>
           </div>
           <div className="flex flex-col gap-6 py-8">

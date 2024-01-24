@@ -8,6 +8,7 @@ import "aos/dist/aos.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updateArray } from "../redux/arrayOfId";
+import { Link } from "react-router-dom";
 
 const PrimaryProductCard = () => {
   const [fetchItems, setFetchItem] = useState([]);
@@ -42,14 +43,16 @@ const PrimaryProductCard = () => {
   );
 
   const handleItemTOAddInCart = (id) => {
-    const idWithQuantity = {id, quantity: 1}
+    const idWithQuantity = { id, quantity: 1 };
     setIdArray((prev) => [...prev, idWithQuantity]);
   };
   useEffect(() => {
-    const uniqueData = Array.from(new Set(idArray.map(item => item.id))).map(uniqueId => {
-      const itemWithUniqueId = idArray.find(item => item.id === uniqueId);
-      return { id: uniqueId, quantity: itemWithUniqueId.quantity };
-    });
+    const uniqueData = Array.from(new Set(idArray.map((item) => item.id))).map(
+      (uniqueId) => {
+        const itemWithUniqueId = idArray.find((item) => item.id === uniqueId);
+        return { id: uniqueId, quantity: itemWithUniqueId.quantity };
+      }
+    );
     localStorage.setItem("idArray", JSON.stringify(uniqueData));
     dispatch(updateArray(uniqueData));
   }, [idArray]);
@@ -58,32 +61,39 @@ const PrimaryProductCard = () => {
     <>
       {fetchItems.map((item, index) => {
         return (
-          <div key={index} className="flex gap-2" data-aos="fade-in">
-            <img
-              src={item.images[0]}
-              alt=""
-              className="w-1/3 aspect-square object-cover rounded-lg"
-            />
-            <div className="flex flex-col justify-center gap-1 ">
-              <span className="text-lg font-semibold">{item.name}</span>
-              <div className="flex">
-                {Array.from({ length: 5 }, (e, index) => {
-                  let stars = item.stars;
-                  return (
-                    <span key={index} className="text-yellow-500">
-                      {stars >= index + 1 ? (
-                        <IoIosStar />
-                      ) : stars >= index + 0.5 ? (
-                        <IoIosStarHalf />
-                      ) : (
-                        <IoIosStarOutline />
-                      )}
-                    </span>
-                  );
-                })}
-                <span className="text-sm">({item.reviews} reviews)</span>
-              </div>
-              <p>₹{item.price}</p>
+          <div key={index} className="flex gap-2 min-w-64 w-full p-4" data-aos="fade-in">
+            <Link to={`/product/${item._id}`} className=" min-w-32 w-32 flex items-center">
+              <img
+                src={item.images[0]}
+                alt=""
+                className="w-full aspect-square object-cover rounded-lg"
+              />
+            </Link>
+            <div className="flex flex-col justify-center gap-1">
+              <Link
+                to={`/product/${item._id}`}
+                className="flex flex-col justify-center gap-1"
+              >
+                <span className="text-lg font-semibold">{item.name}</span>
+                <div className="flex">
+                  {Array.from({ length: 5 }, (e, index) => {
+                    let stars = item.stars;
+                    return (
+                      <span key={index} className="text-yellow-500">
+                        {stars >= index + 1 ? (
+                          <IoIosStar />
+                        ) : stars >= index + 0.5 ? (
+                          <IoIosStarHalf />
+                        ) : (
+                          <IoIosStarOutline />
+                        )}
+                      </span>
+                    );
+                  })}
+                  <span className="text-sm">({item.reviews} reviews)</span>
+                </div>
+                <p>₹{item.price}</p>
+              </Link>
               <div
                 onClick={() => {
                   handleItemTOAddInCart(item._id);
