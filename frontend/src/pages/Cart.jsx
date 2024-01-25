@@ -65,16 +65,15 @@ const Cart = () => {
       }
     });
     setMergedData(mergedArray);
-    // console.log(mergedData)
   }, [fetchItems, arrayOfId]);
 
   const handleRemoveItem = (id) => {
-    const newArray = mergedData.filter((e, i) => e._id !== id);
+    // const newArray = mergedData.filter((e, i) => e._id !== id);
     const newArrayOfId = arrayOfId.filter((e, i) => e.id !== id);
     setArrayOfId(newArrayOfId)
-    setMergedData(newArray);
-    dispatch(updateArray(newArray));
-    localStorage.setItem("idArray", JSON.stringify(newArray));
+    // setMergedData(newArray);
+    // dispatch(updateArray(newArray));
+    // localStorage.setItem("idArray", JSON.stringify(newArray));
   };
 
   const handleIncreasingQuantity = async (oldId, quantity) => {

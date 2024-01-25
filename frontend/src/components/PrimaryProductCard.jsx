@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PrimaryBtn from "./PrimaryBtn";
-import { IoIosStar, IoIosStarHalf } from "react-icons/io";
-import { IoIosStarOutline } from "react-icons/io";
 import { FaCartPlus } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -9,6 +7,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updateArray } from "../redux/arrayOfId";
 import { Link } from "react-router-dom";
+import ShowRatings from "./ShowRatings";
 
 const PrimaryProductCard = () => {
   const [fetchItems, setFetchItem] = useState([]);
@@ -75,23 +74,7 @@ const PrimaryProductCard = () => {
                 className="flex flex-col justify-center gap-1"
               >
                 <span className="text-lg font-semibold">{item.name}</span>
-                <div className="flex">
-                  {Array.from({ length: 5 }, (e, index) => {
-                    let stars = item.stars;
-                    return (
-                      <span key={index} className="text-yellow-500">
-                        {stars >= index + 1 ? (
-                          <IoIosStar />
-                        ) : stars >= index + 0.5 ? (
-                          <IoIosStarHalf />
-                        ) : (
-                          <IoIosStarOutline />
-                        )}
-                      </span>
-                    );
-                  })}
-                  <span className="text-sm">({item.reviews} reviews)</span>
-                </div>
+                <ShowRatings rating={item.stars} reviews={item.reviews} />
                 <p>₹{item.price}</p>
               </Link>
               <div
