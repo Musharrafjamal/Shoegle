@@ -5,8 +5,10 @@ import { FaCartShopping } from "react-icons/fa6";
 import Buttons from "./Buttons";
 import SecondaryBtn from "./SecondaryBtn";
 import { useSelector } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Nav = ({ alternate, btns }) => {
+  const { user } = useAuth0();
   const [cartCounting, setCartCounting] = useState(0);
 
   const myArray = useSelector((state) => state.arrayOfId.myArray);
@@ -26,6 +28,17 @@ const Nav = ({ alternate, btns }) => {
       {alternate ? (
         <nav className="flex gap-4 justify-center items-center text-stone-700 ">
           <Buttons btns={btns} />
+          <span className="h-12 w-12">
+            {user ? (
+              <img
+                src={user && user.picture ? user.picture : ""}
+                alt="profile-img"
+                className="h-12 w-12 rounded-full"
+              />
+            ) : (
+              <div className="img-loader"></div>
+            )}
+          </span>
         </nav>
       ) : (
         <nav className="flex gap-8 justify-center items-center">
@@ -61,6 +74,17 @@ const Nav = ({ alternate, btns }) => {
               destination={"/cart"}
             />
           </div>
+          <span className="h-12 w-12">
+            {user ? (
+              <img
+                src={user && user.picture ? user.picture : ""}
+                alt="profile-img"
+                className="h-12 w-12 rounded-full"
+              />
+            ) : (
+              <div className="img-loader"></div>
+            )}
+          </span>
         </nav>
       )}
     </header>

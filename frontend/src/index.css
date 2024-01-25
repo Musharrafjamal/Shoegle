@@ -81,3 +81,68 @@ html{
     transform: scale(1) rotate(360deg);
   }
 }
+.img-loader {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  background: #FFF;
+  border-radius: 4px;
+  overflow: hidden;
+  border-radius: 100%;
+}
+
+.img-loader:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -15px;
+  width: 30px;
+  height: 30px;
+  transform: rotate(40deg) translate(30%, 40%);
+  background: #ff9371;
+  box-shadow: 20px -34px 0 5px #ff3d00;
+  animation: slide 2s infinite ease-in-out alternate;
+}
+
+.img-loader:after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff3d00;
+  transform: rotate(0deg);
+  transform-origin: 35px 145px;
+  animation: rotate 2s infinite ease-in-out;
+}
+
+@keyframes slide {
+  0% , 100% {
+    bottom: -35px
+  }
+
+  25% , 75% {
+    bottom: -2px
+  }
+
+  20% , 80% {
+    bottom: 2px
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(-15deg)
+  }
+
+  25% , 75% {
+    transform: rotate(0deg)
+  }
+
+  100% {
+    transform: rotate(25deg)
+  }
+}
+  

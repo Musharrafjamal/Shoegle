@@ -7,8 +7,10 @@ import ShowRatings from "../components/ShowRatings";
 import PrimaryBtn from "../components/PrimaryBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { updateArray } from "../redux/arrayOfId";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Product = () => {
+  const { user } = useAuth0();
   const { id } = useParams();
 
   //getting cart counting to show on nav!
