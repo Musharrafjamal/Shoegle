@@ -10,7 +10,6 @@ import { updateArray } from "../redux/arrayOfId";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Product = () => {
-  const { user } = useAuth0();
   const { id } = useParams();
 
   //getting cart counting to show on nav!
@@ -28,22 +27,16 @@ const Product = () => {
       content: "Home",
       destination: "/",
       secondary: true,
-      linkTag: true,
-      width: "w-24",
     },
     {
       content: "Collection",
       destination: "/collection",
       secondary: true,
-      linkTag: true,
-      width: "w-24",
     },
     {
       content: `Cart ${cartCounting}`,
       destination: "/cart",
-      linkTag: true,
       icon: <FaCartShopping />,
-      width: "w-24",
     },
   ];
   const [fetchItems, setFetchItem] = useState([]);
@@ -152,7 +145,7 @@ const Product = () => {
                   onClick={() => {
                     handleItemTOAddInCart(fetchItems._id);
                   }}
-                  className="w-1/2"
+                  className="w-1/3"
                 >
                   <PrimaryBtn icon={<FaCartPlus size={20} />} />
                 </div>

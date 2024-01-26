@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo/running.png";
 import { Link } from "react-router-dom";
-import { FaCartShopping } from "react-icons/fa6";
+import { FaCartShopping, FaUserLock } from "react-icons/fa6";
 import Buttons from "./Buttons";
 import SecondaryBtn from "./SecondaryBtn";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+import PrimaryBtn from "./PrimaryBtn";
+import { IoLogOutOutline } from "react-icons/io5";
 
 const Nav = ({ alternate, btns }) => {
-  const { user } = useAuth0();
+  const { user, loginWithRedirect, logout } = useAuth0();
   const [cartCounting, setCartCounting] = useState(0);
 
   const myArray = useSelector((state) => state.arrayOfId.myArray);
@@ -28,63 +30,111 @@ const Nav = ({ alternate, btns }) => {
       {alternate ? (
         <nav className="flex gap-4 justify-center items-center text-stone-700 ">
           <Buttons btns={btns} />
-          <span className="h-12 w-12">
-            {user ? (
-              <img
-                src={user && user.picture ? user.picture : ""}
-                alt="profile-img"
-                className="h-12 w-12 rounded-full"
-              />
-            ) : (
-              <div className="img-loader"></div>
-            )}
-          </span>
+          {user ? (
+            <span className="flex gap-2 items-center border border-slate-400 px-4 py-1 rounded-xl ">
+              <div className="wrapper">
+                <div>
+                  <a href="#" className="span-tooltip">
+                    <i>
+                      <img
+                        src={user && user.picture ? user.picture : ""}
+                        alt="profile-img"
+                        className="rounded-full"
+                      />
+                    </i>
+                    <span>{user.name}</span>
+                  </a>
+                </div>
+              </div>
+
+              <button
+                className="text-2xl"
+                onClick={() => {
+                  logout();
+                }}
+                title="logout"
+              >
+                <IoLogOutOutline />
+              </button>
+            </span>
+          ) : (
+            <span
+              onClick={() => {
+                loginWithRedirect();
+              }}
+            >
+              <PrimaryBtn content="Login" icon={<FaUserLock />} />
+            </span>
+          )}
         </nav>
       ) : (
-        <nav className="flex gap-8 justify-center items-center">
+        <nav className="flex gap-6 justify-center items-center">
           <a
             href="/"
-            className="transition-all duration-300 ease-in-out font-semibold text-stone-700  hover:scale-110 hover:bg-gradient-to-r from-red-500 to-blue-500 hover:bg-clip-text hover:text-transparent"
+            className="transition-all duration-300 ease-in-out font-semibold text-stone-700 text-sm whitespace-nowrap hover:scale-110 hover:bg-gradient-to-r from-red-500 to-blue-500 hover:bg-clip-text hover:text-transparent"
           >
             Home
           </a>
           <a
             href="#featured"
-            className="transition-all duration-300 ease-in-out font-semibold text-stone-700  hover:scale-110 hover:bg-gradient-to-r from-red-500 to-blue-500 hover:bg-clip-text hover:text-transparent"
+            className="transition-all duration-300 ease-in-out font-semibold text-stone-700 text-sm whitespace-nowrap hover:scale-110 hover:bg-gradient-to-r from-red-500 to-blue-500 hover:bg-clip-text hover:text-transparent"
           >
             Featured
           </a>
           <a
             href="#best-seller"
-            className="transition-all duration-300 ease-in-out font-semibold text-stone-700  hover:scale-110 hover:bg-gradient-to-r from-red-500 to-blue-500 hover:bg-clip-text hover:text-transparent"
+            className="transition-all duration-300 ease-in-out font-semibold text-stone-700 text-sm whitespace-nowrap hover:scale-110 hover:bg-gradient-to-r from-red-500 to-blue-500 hover:bg-clip-text hover:text-transparent"
           >
             Best seller
           </a>
           <Link
             to="/collection"
-            className="transition-all duration-300 ease-in-out font-semibold text-stone-700  hover:scale-110 hover:bg-gradient-to-r from-red-500 to-blue-500 hover:bg-clip-text hover:text-transparent"
+            className="transition-all duration-300 ease-in-out font-semibold text-stone-700 text-sm whitespace-nowrap hover:scale-110 hover:bg-gradient-to-r from-red-500 to-blue-500 hover:bg-clip-text hover:text-transparent"
           >
             Collection
           </Link>
-          <div className="w-20">
-            <SecondaryBtn
-              content={`Cart ${cartCounting}`}
-              icon={<FaCartShopping />}
-              linkTag={true}
-              destination={"/cart"}
-            />
-          </div>
-          <span className="h-12 w-12">
-            {user ? (
-              <img
-                src={user && user.picture ? user.picture : ""}
-                alt="profile-img"
-                className="h-12 w-12 rounded-full"
-              />
-            ) : (
-              <div className="img-loader"></div>
-            )}
-          </span>
+          <SecondaryBtn
+            content={`Cart ${cartCounting}`}
+            icon={<FaCartShopping />}
+            linkTag={true}
+            destination={"/cart"}
+          />
+          {user ? (
+            <span className="flex gap-2 items-center border border-slate-400 px-4 py-1 rounded-xl ">
+              <div className="wrapper">
+                <div>
+                  <a href="#" className="span-tooltip">
+                    <i>
+                      <img
+                        src={user && user.picture ? user.picture : ""}
+                        alt="profile-img"
+                        className="rounded-full"
+                      />
+                    </i>
+                    <span>{user.name}</span>
+                  </a>
+                </div>
+              </div>
+
+              <button
+                className="text-2xl"
+                onClick={() => {
+                  logout();
+                }}
+                title="logout"
+              >
+                <IoLogOutOutline />
+              </button>
+            </span>
+          ) : (
+            <span
+              onClick={() => {
+                loginWithRedirect();
+              }}
+            >
+              <PrimaryBtn content="Login" icon={<FaUserLock />} />
+            </span>
+          )}
         </nav>
       )}
     </header>

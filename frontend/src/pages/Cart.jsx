@@ -22,15 +22,11 @@ const Cart = () => {
       content: "Home",
       destination: "/",
       secondary: true,
-      linkTag: true,
-      width: "w-24",
     },
     {
       content: "Collection",
       destination: "/collection",
-      linkTag: true,
       icon: <FaCartShopping />,
-      width: "w-28",
     },
   ];
   const [fetchItems, setFetchItem] = useState([]);

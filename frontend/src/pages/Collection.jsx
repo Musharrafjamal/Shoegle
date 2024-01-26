@@ -22,15 +22,11 @@ const Collection = () => {
       content: "Home",
       destination: "/",
       secondary: true,
-      linkTag: true,
-      width: "w-24",
     },
     {
       content: `Cart ${cartCounting}`,
       destination: "/cart",
-      linkTag: true,
       icon: <FaCartShopping />,
-      width: "w-24",
     },
   ];
 

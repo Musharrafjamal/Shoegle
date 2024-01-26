@@ -24,15 +24,11 @@ const AddProduct = () => {
       content: "Home",
       destination: "/",
       secondary: true,
-      linkTag: true,
-      width: "w-24",
     },
     {
       content: `Cart ${count}`,
       destination: "/cart",
-      linkTag: true,
       icon: <FaCartShopping />,
-      width: "w-24",
     },
   ];
   const [imageList, setImageList] = useState([]);
