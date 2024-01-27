@@ -17,7 +17,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const AddProduct = () => {
   const count = useSelector((state) => state.counter);
-  const [productData, setProductData] = useState({ reviews: 0 });
+  const [productData, setProductData] = useState();
 
   const btns = [
     {
@@ -34,7 +34,6 @@ const AddProduct = () => {
   const [imageList, setImageList] = useState([]);
   const [imgvalidationErr, setImgValidationErr] = useState(false);
   const [productName, setProductName] = useState("");
-  const [productId, setProductId] = useState("");
 
   const backendUrl = useSelector((state) => state.backendUrlSlice);
 
@@ -70,7 +69,6 @@ const AddProduct = () => {
         quantity: 1
       });
       console.log("Product added successfully: ", data.data);
-      setProductId(data.data._id);
       setImageList([]);
       setLoading(false);
     } catch (err) {

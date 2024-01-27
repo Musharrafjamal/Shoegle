@@ -8,9 +8,11 @@ import PrimaryBtn from "../components/PrimaryBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { updateArray } from "../redux/arrayOfId";
 import { useAuth0 } from "@auth0/auth0-react";
+import ReviewCard from "../components/ReviewCard";
 
 const Product = () => {
   const { id } = useParams();
+  const { user } = useAuth0();
 
   //getting cart counting to show on nav!
   const [cartCounting, setCartCounting] = useState(0);
@@ -87,7 +89,7 @@ const Product = () => {
       <Nav btns={btns} alternate={true} />
       {fetchItems.length !== 0 ? (
         <div className="px-10 pb-8 flex flex-col gap-8">
-          <div className="flex gap-8">
+          <div className="flex gap-8  overflow-hidden">
             <div className="flex flex-col gap-4 w-1/2">
               <div className="w-full h-full">
                 {imgLoading && (
@@ -137,7 +139,9 @@ const Product = () => {
                     reviews={fetchItems.reviews}
                   />
                 </div>
-                <p className="text-stone-700 text-sm">{fetchItems.description}</p>
+                <p className="text-stone-700 text-sm">
+                  {fetchItems.description}
+                </p>
                 <p className="text-3xl font-semibold text-green-500">
                   ₹{fetchItems.price}
                 </p>
@@ -157,9 +161,19 @@ const Product = () => {
             <span>Reviews</span>
             <span className="h-[1px] w-full bg-stone-400"></span>
           </div>
+          <div>
+            <ReviewCard productId={fetchItems._id} reviews={fetchItems.reviews} />
+          </div>
         </div>
       ) : (
-        <span>Locading...</span>
+        <div className="h-screen flex justify-center items-center">
+          <div className="loader">
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="circle"></div>
+          </div>
+        </div>
       )}
     </div>
   );

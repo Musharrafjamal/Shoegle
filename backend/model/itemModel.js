@@ -18,9 +18,9 @@ const itemSchema = new mongoose.Schema({
     type: Number,
   },
   reviews: {
-    type: Number,
-    required: true,
-  }
+    type: Array,
+    default: [],
+  },
 });
 
 const ItemModel = mongoose.model("Item", itemSchema);

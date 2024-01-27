@@ -1,7 +1,7 @@
 import React from "react";
 import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from "react-icons/io";
 
-const ShowRatings = ({rating, reviews}) => {
+const ShowRatings = ({ rating, reviews }) => {
   return (
     <div className="flex">
       {Array.from({ length: 5 }, (e, index) => {
@@ -18,7 +18,7 @@ const ShowRatings = ({rating, reviews}) => {
           </span>
         );
       })}
-      <span className="text-sm">({reviews} reviews)</span>
+      {reviews && <span className="text-sm">({reviews.length} reviews)</span>}
     </div>
   );
 };

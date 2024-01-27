@@ -31,7 +31,7 @@ const Nav = ({ alternate, btns }) => {
         <nav className="flex gap-4 justify-center items-center text-stone-700 ">
           <Buttons btns={btns} />
           {user ? (
-            <span className="flex gap-2 items-center border border-slate-400 px-4 py-1 rounded-xl ">
+            <span className="flex gap-2 items-center border border-stone-300 px-4 py-1 rounded-xl shadow-md shadow-stone-400">
               <div className="wrapper">
                 <div>
                   <a href="#" className="span-tooltip">
@@ -100,7 +100,7 @@ const Nav = ({ alternate, btns }) => {
             destination={"/cart"}
           />
           {user ? (
-            <span className="flex gap-2 items-center border border-slate-400 px-4 py-1 rounded-xl ">
+            <span className="flex gap-2 items-center border border-stone-300 px-4 py-1 rounded-xl shadow-md shadow-stone-400">
               <div className="wrapper">
                 <div>
                   <a href="#" className="span-tooltip">
@@ -115,7 +115,6 @@ const Nav = ({ alternate, btns }) => {
                   </a>
                 </div>
               </div>
-
               <button
                 className="text-2xl"
                 onClick={() => {
