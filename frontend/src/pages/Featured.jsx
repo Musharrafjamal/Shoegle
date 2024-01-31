@@ -8,7 +8,7 @@ const Featured = () => {
   return (
     <>
       <Banner heading={"Featured"} />
-      <div className="grid grid-cols-4 gap-8 py-8 px-20">
+      <div className="grid grid-cols-4 gap-8 py-8 px-16">
         <SecondaryProductCard />
       </div>
     </>

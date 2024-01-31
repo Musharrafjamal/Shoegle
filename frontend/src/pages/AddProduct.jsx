@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import { useSelector } from "react-redux";
 import { FaCartShopping } from "react-icons/fa6";
@@ -11,14 +11,17 @@ import { v4 } from "uuid";
 import { storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-// Remaining Tasks:
-// 1: Add loading screen!
-// 2: Discard button function
-
 const AddProduct = () => {
-  const count = useSelector((state) => state.counter);
   const [productData, setProductData] = useState();
+  const [cartCounting, setCartCounting] = useState(0);
 
+  const myArray = useSelector((state) => state.arrayOfId.myArray);
+  useEffect(() => {
+    if (Array.isArray(myArray) && myArray.length > 0) {
+      const uniqueCartItemArray = Array.from(new Set(myArray));
+      setCartCounting(uniqueCartItemArray.length);
+    }
+  }, [myArray.length]);
   const btns = [
     {
       content: "Home",
@@ -26,7 +29,7 @@ const AddProduct = () => {
       secondary: true,
     },
     {
-      content: `Cart ${count}`,
+      content: `Cart ${cartCounting}`,
       destination: "/cart",
       icon: <FaCartShopping />,
     },
@@ -42,7 +45,6 @@ const AddProduct = () => {
     setImageList(updatedImageList);
   };
   const addProductUrl = `${backendUrl}/add-product`;
-  const webGetItem = "https://shoegle-production.up.railway.app/add-product";
 
   const handleUpload = async () => {
     const uploadPromises = imageList.map((image) => {

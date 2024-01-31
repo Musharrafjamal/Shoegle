@@ -37,8 +37,12 @@ const Nav = ({ alternate, btns }) => {
                   <a href="#" className="span-tooltip">
                     <i>
                       <img
-                        src={user && user.picture ? user.picture : ""}
-                        alt="profile-img"
+                        src={
+                          user && user.picture
+                            ? user.picture
+                            : "https://firebasestorage.googleapis.com/v0/b/shoegle-ce904.appspot.com/o/running.png?alt=media&token=6481f9f5-4e92-4db6-9cbc-9d71d2fc5fb3"
+                        }
+                        alt="img"
                         className="rounded-full"
                       />
                     </i>
@@ -106,8 +110,12 @@ const Nav = ({ alternate, btns }) => {
                   <a href="#" className="span-tooltip">
                     <i>
                       <img
-                        src={user && user.picture ? user.picture : ""}
-                        alt="profile-img"
+                        src={
+                          user && user.picture
+                            ? user.picture
+                            : "https://firebasestorage.googleapis.com/v0/b/shoegle-ce904.appspot.com/o/running.png?alt=media&token=6481f9f5-4e92-4db6-9cbc-9d71d2fc5fb3"
+                        }
+                        alt="img"
                         className="rounded-full"
                       />
                     </i>

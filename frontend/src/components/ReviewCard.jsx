@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import ShowRatings from "./ShowRatings";
+import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from "react-icons/io";
 import { FaRegHandPointLeft, FaUserLock } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
 import PrimaryBtn from "./PrimaryBtn";
@@ -38,6 +38,17 @@ const ReviewCard = ({ productId, reviews }) => {
   const handleSubmitReview = async () => {
     try {
       setUploadReviewLoading(true);
+      setReviewList((prev) => {
+        return [
+          ...prev,
+          {
+            userName: user.name,
+            userImg: user.picture,
+            rating: rating,
+            reviewMessage: review,
+          },
+        ];
+      });
       const uploadedImageUrls = await handleUpload();
       await axios.post(`${backendUrl}/post-review`, {
         productId,
@@ -69,14 +80,18 @@ const ReviewCard = ({ productId, reviews }) => {
   // Left to render image of user reviews!
   // change product rating according to user reviews!
 
+  const handleAddingReview = (e) => {
+    setReview(e.target.value);
+  };
+
   return (
     <>
       <div className="grid grid-cols-2 gap-12 mb-10">
-        {reviewList.map((review) => {
+        {reviewList.map((review, index) => {
           return (
             <div
-              key={review._id}
-              className="flex flex-col gap-2 border border-stone-300 p-4 rounded-lg shadow-md shadow-stone-400"
+              key={index}
+              className="flex flex-col gap-2 p-4 rounded-lg border border-stone-300 shadow-md shadow-stone-400"
             >
               <div className="flex items-center gap-2">
                 <img
@@ -86,7 +101,22 @@ const ReviewCard = ({ productId, reviews }) => {
                 />
 
                 <div>
-                  <ShowRatings rating={review.rating} />
+                  <div className="flex">
+                    {Array.from({ length: 5 }, (e, index) => {
+                      let stars = review.rating;
+                      return (
+                        <span key={index} className="text-[#FFB800]">
+                          {stars >= index + 1 ? (
+                            <IoIosStar />
+                          ) : stars >= index + 0.5 ? (
+                            <IoIosStarHalf />
+                          ) : (
+                            <IoIosStarOutline />
+                          )}
+                        </span>
+                      );
+                    })}
+                  </div>
                   <span>{review.userName}</span>
                 </div>
               </div>
@@ -174,7 +204,7 @@ const ReviewCard = ({ productId, reviews }) => {
                     rows="4"
                     placeholder="write a new review"
                     className="w-full resize-none py-4 rounded-lg focus:outline-none"
-                    onChange={(e) => setReview(e.target.value)}
+                    onChange={(e) => handleAddingReview(e)}
                   ></textarea>
                   <div className="flex flex-col gap-2">
                     <label

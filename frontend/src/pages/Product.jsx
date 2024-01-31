@@ -89,7 +89,7 @@ const Product = () => {
       <Nav btns={btns} alternate={true} />
       {fetchItems.length !== 0 ? (
         <div className="px-10 pb-8 flex flex-col gap-8">
-          <div className="flex gap-8  overflow-hidden">
+          <div className="flex gap-8 overflow-hidden">
             <div className="flex flex-col gap-4 w-1/2">
               <div className="w-full h-full">
                 {imgLoading && (
@@ -112,7 +112,7 @@ const Product = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/2 h-full flex flex-col items-center  gap-4">
+            <div className="w-1/2 h-full flex flex-col gap-4">
               <div className="flex gap-4 w-full">
                 {fetchItems.images.map((img, index) => {
                   return (
@@ -129,13 +129,12 @@ const Product = () => {
                   );
                 })}
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 ">
                 <div>
                   <h2 className="text-stone-700 font-semibold text-4xl">
                     {fetchItems.name}
                   </h2>
                   <ShowRatings
-                    rating={fetchItems.stars}
                     reviews={fetchItems.reviews}
                   />
                 </div>

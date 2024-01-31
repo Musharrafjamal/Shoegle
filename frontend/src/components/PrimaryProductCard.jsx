@@ -60,8 +60,8 @@ const PrimaryProductCard = () => {
     <>
       {fetchItems.map((item, index) => {
         return (
-          <div key={index} className="flex gap-2 min-w-64 w-full p-4" data-aos="fade-in">
-            <Link to={`/product/${item._id}`} className=" min-w-32 w-32 flex items-center">
+          <div key={index} className="flex gap-2 min-w-80 w-full p-4 border border-stone-300 shadow-sm shadow-stone-400 rounded" data-aos="fade-in">
+            <Link to={`/product/${item._id}`} className=" min-w-32 w-32 flex items-center ">
               <img
                 src={item.images[0]}
                 alt=""
@@ -74,7 +74,7 @@ const PrimaryProductCard = () => {
                 className="flex flex-col justify-center gap-1"
               >
                 <span className="text-lg font-semibold">{item.name}</span>
-                <ShowRatings rating={item.stars} reviews={item.reviews} />
+                <ShowRatings reviews={item.reviews} />
                 <p>₹{item.price}</p>
               </Link>
               <div
