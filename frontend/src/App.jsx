@@ -4,7 +4,7 @@ import MainHome from "./pages/MainHome";
 import Cart from "./pages/Cart";
 import AddProduct from "./pages/AddProduct";
 import Product from "./pages/Product";
-import User from "./pages/User";
+import Test from "./pages/Test";
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/collection" element={<Collection />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/product/:id" element={<Product />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </>
   );

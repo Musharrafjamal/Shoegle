@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateArray } from "../redux/arrayOfId";
 import { useAuth0 } from "@auth0/auth0-react";
 import ReviewCard from "../components/ReviewCard";
+import { TiHome } from "react-icons/ti";
+import { BsFillCollectionFill } from "react-icons/bs";
 
 const Product = () => {
   const { id } = useParams();
@@ -28,12 +30,12 @@ const Product = () => {
     {
       content: "Home",
       destination: "/",
-      secondary: true,
+      icon: <TiHome />,
     },
     {
       content: "Collection",
       destination: "/collection",
-      secondary: true,
+      icon: <BsFillCollectionFill />,
     },
     {
       content: `Cart ${cartCounting}`,

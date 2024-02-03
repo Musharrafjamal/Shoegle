@@ -1,5 +1,4 @@
 import React from "react";
-import icon from "../assets/logo/running.png";
 import { FaLocationDot } from "react-icons/fa6";
 import instagram from "../assets/social-icons/instagram.svg";
 import twitter from "../assets/social-icons/Twitter.svg";
@@ -10,7 +9,11 @@ const Footer = () => {
     <div className="w-full bg-stone-700 text-white flex justify-between px-8">
       <div className="flex flex-col justify-between py-6 gap-16 px-4">
         <div className="flex gap-2 items-center">
-          <img src={icon} alt="logo" className="w-20" />
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/shoegle-ce904.appspot.com/o/running.png?alt=media&token=6481f9f5-4e92-4db6-9cbc-9d71d2fc5fb3"
+            alt="logo"
+            className="w-20"
+          />
           <span className="text-3xl font-semibold">Shoegle</span>
         </div>
         <div className="flex gap-4">

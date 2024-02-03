@@ -52,22 +52,24 @@ const ShowRatings = ({ reviews }) => {
   }, [ratingArray]);
 
   return (
-    <div className="flex">
-      {Array.from({ length: 5 }, (e, index) => {
-        let stars = rating;
-        return (
-          <span key={index} className="text-[#FFB800]">
-            {stars >= index + 1 ? (
-              <IoIosStar />
-            ) : stars >= index + 0.5 ? (
-              <IoIosStarHalf />
-            ) : (
-              <IoIosStarOutline />
-            )}
-          </span>
-        );
-      })}
-      {reviews && <span className="text-sm">({reviews.length} reviews)</span>}
+    <div className="flex justify-center items-center gap-1">
+      <div className="flex">
+        {Array.from({ length: 5 }, (e, index) => {
+          let stars = rating;
+          return (
+            <span key={index} className="text-[#FFB800]">
+              {stars >= index + 1 ? (
+                <IoIosStar size={15} />
+              ) : stars >= index + 0.5 ? (
+                <IoIosStarHalf size={15} />
+              ) : (
+                <IoIosStarOutline size={15} />
+              )}
+            </span>
+          );
+        })}
+      </div>
+      {reviews && <span className="text-xs">({reviews.length} reviews)</span>}
     </div>
   );
 };

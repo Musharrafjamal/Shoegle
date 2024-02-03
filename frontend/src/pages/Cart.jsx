@@ -6,6 +6,8 @@ import { updateArray } from "../redux/arrayOfId";
 import axios from "axios";
 import Footer from "../components/Footer";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { TiHome } from "react-icons/ti";
 
 const Cart = () => {
   const localIdArray = JSON.parse(localStorage.getItem("idArray"));
@@ -21,7 +23,7 @@ const Cart = () => {
     {
       content: "Home",
       destination: "/",
-      secondary: true,
+      icon: <TiHome />,
     },
     {
       content: "Collection",
@@ -149,14 +151,18 @@ const Cart = () => {
                     className="flex px-10 justify-center items-center text-stone-700"
                     key={index}
                   >
-                    <span className="flex gap-2 w-[100%]">
-                      <img
-                        src={item.images[0]}
-                        alt=""
-                        className="w-20 h-20 object-cover rounded"
-                      />
+                    <span className="flex gap-2 w-full">
+                      <Link to={`/product/${item._id}`}>
+                        <img
+                          src={item.images[0]}
+                          alt=""
+                          className="w-20 h-20 object-cover rounded"
+                        />
+                      </Link>
                       <span>
-                        <div className="text-lg font-semibold">{item.name}</div>
+                        <Link to={`/product/${item._id}`}>
+                          <div className="text-lg font-semibold hover:underline transition-all">{item.name}</div>
+                        </Link>
                         <button
                           onClick={() => {
                             handleRemoveItem(item._id);

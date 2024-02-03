@@ -10,6 +10,7 @@ import axios from "axios";
 import { v4 } from "uuid";
 import { storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { TiHome } from "react-icons/ti";
 
 const AddProduct = () => {
   const [productData, setProductData] = useState();
@@ -26,7 +27,7 @@ const AddProduct = () => {
     {
       content: "Home",
       destination: "/",
-      secondary: true,
+      icon: <TiHome />
     },
     {
       content: `Cart ${cartCounting}`,

@@ -60,12 +60,18 @@ const PrimaryProductCard = () => {
     <>
       {fetchItems.map((item, index) => {
         return (
-          <div key={index} className="flex gap-2 min-w-80 w-full p-4 border border-stone-300 shadow-sm shadow-stone-400 rounded" data-aos="fade-in">
-            <Link to={`/product/${item._id}`} className=" min-w-32 w-32 flex items-center ">
+          <div
+            key={index}
+            className=" w-[17rem] flex gap-2 p-4 bg-stone-100 rounded"
+          >
+            <Link
+              to={`/product/${item._id}`}
+              className="min-w-24 w-24 flex items-center"
+            >
               <img
                 src={item.images[0]}
                 alt=""
-                className="w-full aspect-square object-cover rounded-lg"
+                className="w-full aspect-square object-cover rounded-md"
               />
             </Link>
             <div className="flex flex-col justify-center gap-1">
@@ -73,8 +79,12 @@ const PrimaryProductCard = () => {
                 to={`/product/${item._id}`}
                 className="flex flex-col justify-center gap-1"
               >
-                <span className="text-lg font-semibold">{item.name}</span>
-                <ShowRatings reviews={item.reviews} />
+                <span className="font-semibold whitespace-nowrap text-ellipsis overflow-hidden w-4/5">
+                  {item.name}
+                </span>
+                <div className="flex items-start">
+                  <ShowRatings reviews={item.reviews} />
+                </div>
                 <p>₹{item.price}</p>
               </Link>
               <div
@@ -82,7 +92,10 @@ const PrimaryProductCard = () => {
                   handleItemTOAddInCart(item._id);
                 }}
               >
-                <PrimaryBtn icon={<FaCartPlus size={20} />} />
+                <button className="p-2 flex gap-1 justify-center items-center cursor-pointer bg-stone-700 text-xs text-white rounded hover:scale-95 hover:bg-stone-800 transition-all duration-300">
+                  Add to cart <FaCartPlus size={15} />
+                </button>
+                {/* <PrimaryBtn icon={<FaCartPlus size={20} />} /> */}
               </div>
             </div>
           </div>

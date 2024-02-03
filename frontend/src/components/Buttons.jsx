@@ -8,7 +8,7 @@ const Buttons = ({ btns }) => {
       {btns !== undefined &&
         btns.map((btn, index) => {
           return btn.secondary ? (
-            <div key={index}>
+            <div key={index} className="py-2 flex justify-center">
               <SecondaryBtn
                 content={btn.content}
                 icon={btn.icon}
@@ -16,7 +16,7 @@ const Buttons = ({ btns }) => {
               />
             </div>
           ) : (
-            <div key={index}>
+            <div key={index}  className="py-2 flex justify-center">
               <PrimaryBtn
                 content={btn.content}
                 icon={btn.icon}

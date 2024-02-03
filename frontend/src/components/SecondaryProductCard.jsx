@@ -59,7 +59,6 @@ const SecondaryProductCard = () => {
       {fetchItems.map((item, index) => {
         return (
           <div
-            data-aos="zoom-in"
             key={index}
             className="flex flex-col gap-2 items-center p-6 border border-stone-300 shadow-md shadow-stone-400 rounded-lg"
           >
