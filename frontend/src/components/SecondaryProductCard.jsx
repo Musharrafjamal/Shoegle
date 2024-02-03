@@ -60,24 +60,26 @@ const SecondaryProductCard = () => {
         return (
           <div
             key={index}
-            className="flex flex-col gap-2 items-center p-6 border border-stone-300 shadow-md shadow-stone-400 rounded-lg"
+            className=" w-52 flex flex-col gap-2 items-center p-6 border border-stone-200 shadow-md shadow-stone-300 rounded-lg"
           >
             <Link
               to={`/product/${item._id}`}
-              className="flex flex-col gap-2 items-center rounded-"
+              className="flex flex-col gap-2 items-center rounded"
             >
               <ShowRatings rating={item.stars} reviews={item.reviews} />
 
-              <img
-                src={item.images[0]}
-                alt=""
-                className="w-full aspect-square object-cover rounded-lg"
-              />
+              <div className="min-w-24 w-24">
+                <img
+                  src={item.images[0]}
+                  alt=""
+                  className="w-full aspect-square object-cover rounded-lg"
+                />
+              </div>
               <div className="flex flex-col items-start gap-1">
-                <h2 className="text-xl font-semibold text-stone-800">
+                <h2 className="text-xl font-semibold text-center text-stone-800 w-36 truncate">
                   {item.name}
                 </h2>
-                <p className="text-right">₹{item.price}</p>
+                <p className="text-center w-full">₹{item.price}</p>
               </div>
             </Link>
             <div

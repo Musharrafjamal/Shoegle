@@ -24,14 +24,11 @@ const BestSeller = () => {
   return (
     <>
       <Banner heading={"Best seller"} data-aos="flip-left" />
-      <div className="grid grid-cols-3 py-12 px-20 gap-x-8 gap-y-16 ">
+      <div className="flex flex-wrap justify-center p-4 gap-4">
         <PrimaryProductCard />
       </div>
       <div className=" flex justify-center pb-10">
-        <span className="w-1/6">
-          {/* <PrimaryBtn content="View all product" /> */}
           <SecondaryBtn content="View all product" icon={<FaArrowUpRightFromSquare />} destination={"/collection"} />
-        </span>
       </div>
       <Footer />
     </>

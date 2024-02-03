@@ -62,11 +62,11 @@ const PrimaryProductCard = () => {
         return (
           <div
             key={index}
-            className=" w-[17rem] flex gap-2 p-4 bg-stone-100 rounded"
+            className=" w-[17.5rem] flex gap-2 p-4 bg-stone-100 rounded"
           >
             <Link
               to={`/product/${item._id}`}
-              className="min-w-24 w-24 flex items-center"
+              className="min-w-24 w-24"
             >
               <img
                 src={item.images[0]}

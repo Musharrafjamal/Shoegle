@@ -51,7 +51,7 @@ const Nav = ({ alternate, btns }) => {
   }, [myArray.length]);
 
   return (
-    <header className="flex justify-between items-center px-10 py-5">
+    <header className="flex justify-between items-center p-2 sm:px-10 sm:py-5">
       <Link to="/" className="flex flex-col justify-center items-center">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/shoegle-ce904.appspot.com/o/running.png?alt=media&token=6481f9f5-4e92-4db6-9cbc-9d71d2fc5fb3"
@@ -94,13 +94,14 @@ const Nav = ({ alternate, btns }) => {
           <div
             className={`${
               isOpen ? "scale-x-125" : "scale-0"
-            } flex absolute top-0 right-0 flex-col gap-3 origin-top-right ease-in-out transition-all duration-500 w-32 mt-8 bg-white rounded-lg shadow-md px-2 py-2 z-10`}
+            } flex absolute top-0 right-0 flex-col gap-3 origin-top-right ease-in-out transition-all duration-500 w-32 mt-8 bg-white rounded-lg shadow-md p-2 z-10`}
           >
             {alternate ? (
               <div>
-                {btns.map((btn) => {
+                {btns.map((btn, index) => {
                   return (
                     <Link
+                    key={index}
                       to={btn.destination}
                       className="transition-all duration-500 w-full text-sm ease-in-out font-semibold text-stone-700 whitespace-nowrap hover:bg-stone-600 hover:text-white py-3 rounded flex items-center justify-center gap-1"
                     >
@@ -110,12 +111,12 @@ const Nav = ({ alternate, btns }) => {
                 })}
               </div>
             ) : (
-              <div className="flex flex-col justify-center items-center">
+              <div className="flex flex-col">
                 <a
                   href="/"
                   className="transition-all duration-500 w-full text-sm ease-in-out font-semibold text-stone-700  hover:bg-stone-600 hover:text-white py-3 rounded flex items-center justify-center gap-1"
                 >
-                  <span>Home</span> <TiHome />
+                  Home <TiHome />
                 </a>
                 <a
                   href="#featured"

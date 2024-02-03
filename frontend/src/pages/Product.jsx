@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateArray } from "../redux/arrayOfId";
 import { useAuth0 } from "@auth0/auth0-react";
 import ReviewCard from "../components/ReviewCard";
+import Footer from "../components/Footer"
 import { TiHome } from "react-icons/ti";
 import { BsFillCollectionFill } from "react-icons/bs";
 
@@ -91,8 +92,8 @@ const Product = () => {
       <Nav btns={btns} alternate={true} />
       {fetchItems.length !== 0 ? (
         <div className="px-10 pb-8 flex flex-col gap-8">
-          <div className="flex gap-8 overflow-hidden">
-            <div className="flex flex-col gap-4 w-1/2">
+          <div className="flex flex-col md:flex-row gap-8 overflow-hidden">
+            <div className="flex flex-col gap-4 w-full md:w-1/2">
               <div className="w-full h-full">
                 {imgLoading && (
                   <div className="h-full  flex justify-center items-center">
@@ -132,7 +133,7 @@ const Product = () => {
                 })}
               </div>
               <div className="flex flex-col gap-2 ">
-                <div>
+                <div className="flex flex-col items-start">
                   <h2 className="text-stone-700 font-semibold text-4xl">
                     {fetchItems.name}
                   </h2>
@@ -150,7 +151,7 @@ const Product = () => {
                   onClick={() => {
                     handleItemTOAddInCart(fetchItems._id);
                   }}
-                  className="w-1/3"
+                  className="w-32"
                 >
                   <PrimaryBtn icon={<FaCartPlus size={20} />} />
                 </div>
@@ -176,6 +177,7 @@ const Product = () => {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 };

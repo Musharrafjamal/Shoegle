@@ -7,7 +7,7 @@ import linkedin from "../assets/social-icons/linkedin.svg";
 const Footer = () => {
   return (
     <div className="w-full bg-stone-700 text-white flex justify-between px-8">
-      <div className="flex flex-col justify-between py-6 gap-16 px-4">
+      <div className="flex flex-col justify-between py-6 gap-14 px-4">
         <div className="flex gap-2 items-center">
           <img
             src="https://firebasestorage.googleapis.com/v0/b/shoegle-ce904.appspot.com/o/running.png?alt=media&token=6481f9f5-4e92-4db6-9cbc-9d71d2fc5fb3"
@@ -16,8 +16,8 @@ const Footer = () => {
           />
           <span className="text-3xl font-semibold">Shoegle</span>
         </div>
-        <div className="flex gap-4">
-          <span className="flex items-center">
+        <div className="flex gap-4 flex-col items-start sm:flex-row">
+          <span className="flex items-center flex-col sm:flex-row">
             <FaLocationDot /> India
           </span>
           <span>© 2023 Shoegle, Inc. All Rights Reserved</span>
