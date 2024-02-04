@@ -115,7 +115,7 @@ const Product = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/2 h-full flex flex-col gap-4">
+            <div className="w-full md:w-1/2 h-full flex flex-col gap-4">
               <div className="flex gap-4 w-full">
                 {fetchItems.images.map((img, index) => {
                   return (

@@ -78,7 +78,6 @@ const ReviewCard = ({ productId, reviews }) => {
   }, []);
 
   // Left to render image of user reviews!
-  // change product rating according to user reviews!
 
   const handleAddingReview = (e) => {
     setReview(e.target.value);
@@ -206,7 +205,7 @@ const ReviewCard = ({ productId, reviews }) => {
                     className="w-full resize-none py-4 rounded-lg focus:outline-none"
                     onChange={(e) => handleAddingReview(e)}
                   ></textarea>
-                  <div className="flex pb-4 gap-2 flex-col">
+                  <div className="flex pb-4 gap-2 flex-col sm:flex-row md:flex-col">
                     <label
                       htmlFor="review-img"
                       className="flex items-center justify-center gap-2 bg-blue-600 px-6 py-2 hover:bg-blue-700 hover:scale-95 cursor-pointer transition-all duration-300 text-white text-sm rounded-md whitespace-nowrap"
