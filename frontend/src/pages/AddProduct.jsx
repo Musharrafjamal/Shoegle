@@ -27,7 +27,7 @@ const AddProduct = () => {
     {
       content: "Home",
       destination: "/",
-      icon: <TiHome />
+      icon: <TiHome />,
     },
     {
       content: `Cart ${cartCounting}`,
@@ -69,7 +69,7 @@ const AddProduct = () => {
       const data = await axios.post(addProductUrl, {
         ...productData,
         images: uploadedImageUrls,
-        quantity: 1
+        quantity: 1,
       });
       console.log("Product added successfully: ", data.data);
       setImageList([]);
@@ -121,7 +121,7 @@ const AddProduct = () => {
                 aria-label="description"
                 id="description"
                 rows="5"
-                className="border border-stone-600 rounded focus:outline-none"
+                className="border border-stone-600 rounded focus:outline-none resize-none"
                 onChange={(e) =>
                   setProductData((prev) => ({
                     ...productData,
@@ -144,7 +144,7 @@ const AddProduct = () => {
                 }
               />
             </div>
-            <div className="flex items-end gap-4">
+            <div className="flex flex-col md:flex-row md:items-end gap-4">
               <div className="flex flex-col gap-2">
                 <span>Product Images (Max - 4)</span>
                 {imgvalidationErr && (
@@ -183,7 +183,7 @@ const AddProduct = () => {
                 />
               </div>
               {imageList.length ? (
-                <div className=" grid grid-cols-2 gap-4 h-[10rem] w-[12rem]">
+                <div className="grid grid-cols-2 gap-4 h-[10rem] w-[12rem]">
                   {imageList.map((image, index) => (
                     <div
                       key={index}

@@ -24,7 +24,7 @@ const BestSeller = () => {
   return (
     <>
       <Banner heading={"Best seller"} data-aos="flip-left" />
-      <div className="flex flex-wrap justify-center p-4 gap-4">
+      <div className="flex flex-wrap justify-evenly p-4 gap-4">
         <PrimaryProductCard />
       </div>
       <div className=" flex justify-center pb-10">

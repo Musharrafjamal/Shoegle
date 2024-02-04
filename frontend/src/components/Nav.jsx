@@ -51,7 +51,7 @@ const Nav = ({ alternate, btns }) => {
   }, [myArray.length]);
 
   return (
-    <header className="flex justify-between items-center p-2 sm:px-10 sm:py-5">
+    <header className="flex justify-between items-center p-3 sm:px-10 sm:py-5">
       <Link to="/" className="flex flex-col justify-center items-center">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/shoegle-ce904.appspot.com/o/running.png?alt=media&token=6481f9f5-4e92-4db6-9cbc-9d71d2fc5fb3"

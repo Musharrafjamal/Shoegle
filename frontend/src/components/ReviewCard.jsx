@@ -163,7 +163,7 @@ const ReviewCard = ({ productId, reviews }) => {
                   )}
                   <div>
                     <span>{user !== undefined && user.name}</span>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-start gap-2 flex-col sm:flex-row">
                       <div className="flex items-center justify-center text-xl">
                         {[...Array(5)].map((item, index) => {
                           const givenRating = index + 1;
@@ -192,7 +192,7 @@ const ReviewCard = ({ productId, reviews }) => {
                         })}
                       </div>
                       <span className="text-sm text-stone-500 flex gap-1 items-center">
-                        <FaRegHandPointLeft size={18} />
+                        <FaRegHandPointLeft size={18} className="rotate-90 sm:rotate-0" />
                         <span>Please give a rating!</span>
                       </span>
                     </div>
@@ -206,7 +206,7 @@ const ReviewCard = ({ productId, reviews }) => {
                     className="w-full resize-none py-4 rounded-lg focus:outline-none"
                     onChange={(e) => handleAddingReview(e)}
                   ></textarea>
-                  <div className="flex pb-4 gap-2 md:flex-col">
+                  <div className="flex pb-4 gap-2 flex-col">
                     <label
                       htmlFor="review-img"
                       className="flex items-center justify-center gap-2 bg-blue-600 px-6 py-2 hover:bg-blue-700 hover:scale-95 cursor-pointer transition-all duration-300 text-white text-sm rounded-md whitespace-nowrap"

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Nav from "../components/Nav";
 import { FaCartShopping } from "react-icons/fa6";
 import { useSelector, useDispatch } from "react-redux";
-import { updateArray } from "../redux/arrayOfId";
 import axios from "axios";
 import Footer from "../components/Footer";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -66,12 +65,8 @@ const Cart = () => {
   }, [fetchItems, arrayOfId]);
 
   const handleRemoveItem = (id) => {
-    // const newArray = mergedData.filter((e, i) => e._id !== id);
     const newArrayOfId = arrayOfId.filter((e, i) => e.id !== id);
-    setArrayOfId(newArrayOfId)
-    // setMergedData(newArray);
-    // dispatch(updateArray(newArray));
-    // localStorage.setItem("idArray", JSON.stringify(newArray));
+    setArrayOfId(newArrayOfId);
   };
 
   const handleIncreasingQuantity = async (oldId, quantity) => {
@@ -86,7 +81,6 @@ const Cart = () => {
     });
   };
   const handledecreasingQuantity = (oldId, quantity) => {
-    // console.log(arrayOfId)
     setArrayOfId((prevArray) => {
       const updatedQuantity = prevArray.map((item) => {
         if (oldId === item.id && quantity > 1) {
@@ -132,7 +126,82 @@ const Cart = () => {
               {mergedData.length} Items
             </span>
           </div>
-          <div className="flex flex-col gap-6 py-8">
+          <div className="grid grid-cols-1 gap-4 md:hidden">
+            {mergedData.length === 0 ? (
+              <span className="flex flex-col items-center justify-center gap-2 text-stone-700 py-16">
+                <FaCartShopping size={50} />
+                <span>There is no itme in your cart!</span>
+                <div className="flex gap-2 items-center justify-center bg-stone-700 py-3 px-4 text-white rounded hover:scale-110 transition-all duration-300">
+                  <Link to={"/collection"}>Continue shopping</Link>
+                  <FaArrowLeftLong className=" rotate-180" />
+                </div>
+              </span>
+            ) : (
+              mergedData.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center gap-2 m-4 p-4 rounded-md border border-stone-300 shadow-md"
+                  >
+                    <Link
+                      to={`/product/${item._id}`}
+                      className="flex flex-col items-center gap-2"
+                    >
+                      <img
+                        src={item.images[0]}
+                        alt=""
+                        className="w-2/3 aspect-square object-cover rounded-lg"
+                      />
+                      <div className="text-lg font-semibold hover:underline transition-all">
+                        {item.name}
+                      </div>
+                      <div className="font-semibold text-green-700 text-opacity-90">
+                        Rate: ₹{item.price}
+                      </div>
+                    </Link>
+
+                    <span className="flex gap-2 items-center justify-start">
+                      <button
+                        className="px-2 border-2 border-stone-400 rounded hover:bg-stone-700 hover:border-transparent transition-all duration-200 hover:text-white"
+                        onClick={() => {
+                          handledecreasingQuantity(item._id, item.quantity);
+                        }}
+                      >
+                        -
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button
+                        className="px-2 border-2 border-stone-400 rounded hover:bg-stone-700 hover:border-transparent transition-all duration-200 hover:text-white"
+                        onClick={() => {
+                          handleIncreasingQuantity(item._id, item.quantity);
+                        }}
+                      >
+                        +
+                      </button>
+                    </span>
+                    <span className="font-semibold text-stone-700 text-opacity-90">
+                      Price: ₹{item.price * item.quantity}
+                    </span>
+                    <button
+                      onClick={() => {
+                        handleRemoveItem(item._id);
+                      }}
+                      className="bg-red-500 text-white py-2 rounded-md w-full cursor-pointer"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })
+            )}
+            <span className="border-t-2"></span>
+            <div className="w-full text-xl font-semibold text-slate-800 flex items-center gap-4 p-4">
+              <span>Total</span>
+              <span className="bg-slate-300 h-[1px] w-full"></span>
+              <span>₹{totalAmount}</span>
+            </div>
+          </div>
+          <div className="flex-col gap-6 py-8 hidden md:flex">
             <div className="flex px-10 justify-between text-stone-700">
               <span className="w-[100%]">Product List</span>
               <span className="w-1/5 text-center">Quantity</span>
@@ -140,9 +209,13 @@ const Cart = () => {
               <span className="w-1/5 text-center">Price</span>
             </div>
             {mergedData.length === 0 ? (
-              <span className="flex flex-col items-center justify-center  text-stone-700 py-16">
+              <span className="flex flex-col items-center justify-center gap-2 text-stone-700 py-16">
                 <FaCartShopping size={50} />
                 <span>There is no itme in your cart!</span>
+                <div className="flex gap-2 items-center justify-center bg-stone-700 py-3 px-4 text-white rounded hover:scale-110 transition-all duration-300">
+                  <Link to={"/collection"}>Continue shopping</Link>
+                  <FaArrowLeftLong className=" rotate-180" />
+                </div>
               </span>
             ) : (
               mergedData.map((item, index) => {
@@ -161,7 +234,9 @@ const Cart = () => {
                       </Link>
                       <span>
                         <Link to={`/product/${item._id}`}>
-                          <div className="text-lg font-semibold hover:underline transition-all">{item.name}</div>
+                          <div className="text-lg font-semibold hover:underline transition-all">
+                            {item.name}
+                          </div>
                         </Link>
                         <button
                           onClick={() => {
@@ -204,23 +279,24 @@ const Cart = () => {
               })
             )}
             <span className="border-t-2"></span>
-            <div className="text-right w-[93%] text-xl">Total: ₹{totalAmount}</div>
+            <div className="text-right w-[93%] text-xl font-semibold text-stone-700">
+              Total: ₹{totalAmount}
+            </div>
           </div>
           {mergedData.length !== 0 && (
-            <div className="flex py-8 px-12 bg-stone-300 justify-between ">
-              <div className="flex gap-2 items-center text-stone-800 hover:scale-110 transition-all duration-300">
+            <div className="flex py-8 px-12 bg-stone-300 justify-between flex-col gap-4 md:flex-row">
+              <div className="flex gap-2 items-center justify-center text-stone-800 hover:scale-110 transition-all duration-300">
                 <FaArrowLeftLong />
-                <button className="">Continue shopping</button>
+                <Link to={"/collection"}>Continue shopping</Link>
               </div>
-              <div className="flex gap-2 items-center bg-stone-700 py-3 px-4 text-white rounded hover:scale-110 transition-all duration-300">
-                <button className="">Proceed next</button>
+              <div className="flex gap-2 items-center justify-center bg-stone-700 py-3 px-4 text-white rounded hover:scale-110 transition-all duration-300">
+                <button>Proceed next</button>
                 <FaArrowLeftLong className=" rotate-180" />
               </div>
             </div>
           )}
         </main>
       )}
-
       <Footer />
     </>
   );
