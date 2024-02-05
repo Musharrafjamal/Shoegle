@@ -83,9 +83,11 @@ router.post("/post-review", async (req, res) => {
 router.post("/get-all-review", async (req, res) => {
   try {
     const { ids } = req.body;
-    const items = await Promise.all(ids.map(async (id) => {
-      return await ReviewModel.findById(id);
-    }));
+    const items = await Promise.all(
+      ids.map(async (id) => {
+        return await ReviewModel.findById(id);
+      })
+    );
     res.status(201).json(items);
   } catch (err) {
     res
@@ -93,5 +95,6 @@ router.post("/get-all-review", async (req, res) => {
       .json({ error: "Error on getting items", message: err.message });
   }
 });
+
 
 module.exports = router;

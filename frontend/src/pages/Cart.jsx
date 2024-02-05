@@ -285,14 +285,20 @@ const Cart = () => {
           </div>
           {mergedData.length !== 0 && (
             <div className="flex py-8 px-12 bg-stone-300 justify-between flex-col gap-4 md:flex-row">
-              <div className="flex gap-2 items-center justify-center text-stone-800 hover:scale-110 transition-all duration-300">
+              <Link
+                to={"/collection"}
+                className="flex gap-2 items-center justify-center text-stone-800 hover:scale-110 transition-all duration-300"
+              >
                 <FaArrowLeftLong />
-                <Link to={"/collection"}>Continue shopping</Link>
-              </div>
-              <div className="flex gap-2 items-center justify-center bg-stone-700 py-3 px-4 text-white rounded hover:scale-110 transition-all duration-300">
+                <span>Continue shopping</span>
+              </Link>
+              <Link
+                to={"/checkout"}
+                className="flex gap-2 items-center justify-center bg-stone-700 py-3 px-4 text-white rounded hover:scale-110 transition-all duration-300"
+              >
                 <button>Proceed next</button>
                 <FaArrowLeftLong className=" rotate-180" />
-              </div>
+              </Link>
             </div>
           )}
         </main>
