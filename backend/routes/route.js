@@ -1,6 +1,7 @@
 const express = require("express");
 const ItemModel = require("../model/itemModel");
 const ReviewModel = require("../model/reviewModel");
+const AddressModel = require("../model/addressModel");
 const router = express.Router();
 
 router.post("/add-product", async (req, res) => {
@@ -95,6 +96,43 @@ router.post("/get-all-review", async (req, res) => {
       .json({ error: "Error on getting items", message: err.message });
   }
 });
-
+router.post("/add-delivery-address", async (req, res) => {
+  try {
+    const { idEmail, locations } = req.body;
+    const email = await AddressModel.findOne({ idEmail });
+    if (email) {
+      const info = await AddressModel.findOne({ idEmail });
+      info.locations.push(locations);
+      await info.save();
+      res.status(201).json(info);
+    } else {
+      const Info = new AddressModel({
+        idEmail,
+        locations,
+      });
+      const savedInfo = await Info.save();
+      res.status(201).json(savedInfo);
+    }
+  } catch (err) {
+    res.status(500).json({
+      error: "Error on adding address information",
+      message: err.message,
+    });
+  }
+});
+router.post("/get-address", async (req, res) => {
+  try {
+    const { idEmail } = req.body;
+    const info = await AddressModel.findOne({ idEmail });
+    if (info !== null) {
+      res.status(201).json(info);
+    }
+  } catch (err) {
+    res.status(500).json({
+      error: "Error on adding address information",
+      message: err.message,
+    });
+  }
+});
 
 module.exports = router;
