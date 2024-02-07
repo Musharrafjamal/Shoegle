@@ -17,10 +17,14 @@ const Nav = ({ alternate, btns }) => {
   let profileRef = useRef();
   useEffect(() => {
     const handler = (e) => {
-      if (!menuRef.current.contains(e.target)) {
+      if (!menuRef || !menuRef.current || !menuRef.current.contains(e.target)) {
         setIsOpen(false);
       }
-      if (!profileRef.current.contains(e.target)) {
+      if (
+        !profileRef ||
+        !profileRef.current ||
+        !profileRef.current.contains(e.target)
+      ) {
         setIsProfileOpen(false);
       }
     };
@@ -29,7 +33,10 @@ const Nav = ({ alternate, btns }) => {
     return () => {
       document.removeEventListener("mousedown", handler);
     };
-  });
+  }, []);
+  useEffect(() => {
+    console.log();
+  }, []);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
     setIsProfileOpen(false);
@@ -101,7 +108,7 @@ const Nav = ({ alternate, btns }) => {
                 {btns.map((btn, index) => {
                   return (
                     <Link
-                    key={index}
+                      key={index}
                       to={btn.destination}
                       className="transition-all duration-500 w-full text-sm ease-in-out font-semibold text-stone-700 whitespace-nowrap hover:bg-stone-600 hover:text-white py-3 rounded flex items-center justify-center gap-1"
                     >
@@ -171,7 +178,9 @@ const Nav = ({ alternate, btns }) => {
               <button
                 className="py-2 flex items-center gap-1 transition-all duration-500 rounded text-sm text-red-600 hover:bg-red-500 hover:text-white px-2 text-left"
                 onClick={() => {
-                  logout();
+                  logout({
+                    logoutParams: { returnTo: window.location.origin },
+                  });
                 }}
                 title="logout"
               >

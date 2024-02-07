@@ -4,8 +4,9 @@ import { Country, State, City } from "country-state-city";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { RxCross1 } from "react-icons/rx";
 
-const DeliveryForm = () => {
+const DeliveryForm = ({ setOpenDailog }) => {
   const [countryName, setCountryName] = useState("");
   const [stateName, setStateName] = useState("");
   const [cityName, setCityName] = useState("");
@@ -42,9 +43,14 @@ const DeliveryForm = () => {
     console.log(response);
   };
   return (
-    <div className="mx-10 p-8 bg-stone-200 rounded-md my-8">
+    <div className="p-8 bg-stone-200 rounded-md">
       <div className="flex flex-col gap-2 mb-4 ">
-        <span className="text-xl font-semibold">Delivery Information</span>
+        <div className="flex justify-between">
+          <span className="text-xl font-semibold">Delivery Information</span>
+          <button onClick={() => setOpenDailog(false)}>
+            <RxCross1 size={25} />
+          </button>
+        </div>
         <span className="h-[1px] w-full bg-stone-400"></span>
       </div>
       <div className="grid grid-cols-1 gap-4 md:gap-10 md:grid-cols-2 w-full ">
@@ -180,7 +186,7 @@ const DeliveryForm = () => {
             onChange={(e) => setAddress(e.target.value)}
           ></textarea>
         </div>
-        <div className="flex flex-col justify-between py-4">
+        <div className="flex flex-col gap-4 justify-between md:gap-0 md:py-4">
           <div className="flex flex-col gap-2">
             <label htmlFor="pincode" className="font-semibold text-zinc-800 ">
               Pin code
@@ -193,7 +199,13 @@ const DeliveryForm = () => {
               onChange={(e) => setPincode(e.target.value)}
             />
           </div>
-          <div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setOpenDailog(false)}
+              className="flex items-center justify-center font-semibold gap-2 w-full py-3 rounded text-rose-600 transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none hover:bg-rose-500 hover:text-white"
+            >
+              <FaArrowRightLong className="rotate-180" /> <span>Discard</span>
+            </button>
             <button
               onClick={handleSubmit}
               className="flex items-center justify-center font-semibold gap-2 w-full py-3 rounded bg-gradient-to-r from-indigo-500 to-blue-500 text-white transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none "
