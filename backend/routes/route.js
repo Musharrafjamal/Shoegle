@@ -2,6 +2,7 @@ const express = require("express");
 const ItemModel = require("../model/itemModel");
 const ReviewModel = require("../model/reviewModel");
 const AddressModel = require("../model/addressModel");
+const AllAddressModel = require("../model/allAddress");
 const router = express.Router();
 
 router.post("/add-product", async (req, res) => {
@@ -98,20 +99,43 @@ router.post("/get-all-review", async (req, res) => {
 });
 router.post("/add-delivery-address", async (req, res) => {
   try {
-    const { idEmail, locations } = req.body;
-    const email = await AddressModel.findOne({ idEmail });
-    if (email) {
-      const info = await AddressModel.findOne({ idEmail });
-      info.locations.push(locations);
-      await info.save();
-      res.status(201).json(info);
+    const {
+      idEmail,
+      customerName,
+      phoneNumber,
+      email,
+      country,
+      state,
+      city,
+      pincode,
+      address,
+    } = req.body;
+
+    const Info = new AddressModel({
+      customerName,
+      phoneNumber,
+      email,
+      country,
+      state,
+      city,
+      pincode,
+      address,
+    });
+    const savedInfo = await Info.save();
+    // res.status(201).json(savedInfo);
+    // const addressId = savedInfo._id;
+    const availableData = await AllAddressModel.findOne({ idEmail });
+    if (availableData) {
+      availableData.locations.push(savedInfo);
+      await availableData.save();
+      res.status(201).json(availableData);
     } else {
-      const Info = new AddressModel({
+      const data = new AllAddressModel({
         idEmail,
-        locations,
+        locations: [savedInfo],
       });
-      const savedInfo = await Info.save();
-      res.status(201).json(savedInfo);
+      const savedData = await data.save();
+      res.status(201).json(savedData);
     }
   } catch (err) {
     res.status(500).json({
@@ -120,10 +144,34 @@ router.post("/add-delivery-address", async (req, res) => {
     });
   }
 });
+router.post("/delete-address", async (req, res) => {
+  try {
+    const { idEmail, id } = req.body;
+    await AddressModel.findByIdAndDelete(id);
+
+    let deleteAvailableAddress = await AllAddressModel.findOne({ idEmail });
+    if (deleteAvailableAddress) {
+      deleteAvailableAddress.locations =
+        deleteAvailableAddress.locations.filter((data) => {
+          return data._id.toString() !== id.toString();
+        });
+      deleteAvailableAddress = await deleteAvailableAddress.save();
+      res.status(201).json(deleteAvailableAddress);
+    } else {
+      res.status(500).json("Error on deleting address information");
+    }
+  } catch (err) {
+    res.status(500).json({
+      error: "Error on deleting address information",
+      message: err.message,
+    });
+  }
+});
+
 router.post("/get-address", async (req, res) => {
   try {
     const { idEmail } = req.body;
-    const info = await AddressModel.findOne({ idEmail });
+    const info = await AllAddressModel.findOne({ idEmail });
     if (info !== null) {
       res.status(201).json(info);
     }

@@ -6,27 +6,30 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { RxCross1 } from "react-icons/rx";
 
-const DeliveryForm = ({ setOpenDailog }) => {
+const DeliveryForm = ({ setOpenDailog, setLocations }) => {
   const [countryName, setCountryName] = useState("");
+  const [countryString, setCountryString] = useState("");
   const [stateName, setStateName] = useState("");
+  const [stateString, setStateString] = useState("");
   const [cityName, setCityName] = useState("");
   const [customerName, setCustomerName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [pincode, setPincode] = useState();
   const [countryIsoCode, setCountryIsoCode] = useState("");
   const [stateIsoCode, setStateIsoCode] = useState("");
+  const [errors, setErrors] = useState({});
 
   const { user } = useAuth0();
   const backendUrl = useSelector((state) => state.backendUrlSlice);
-  console.log();
 
-  const handleSubmit = async () => {
-    const items = JSON.parse(localStorage.getItem("idArray"));
-    const data = {
-      idEmail: user?.email,
-      locations: {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (countryName !== "" && stateName !== "") {
+      
+      const data = {
+        idEmail: user?.email,
         customerName,
         phoneNumber,
         email,
@@ -35,13 +38,22 @@ const DeliveryForm = ({ setOpenDailog }) => {
         city: cityName,
         pincode,
         address,
-      },
-    };
-    console.log({ data });
-    const url = `${backendUrl}/add-delivery-address`;
-    const response = await axios.post(url, data);
-    console.log(response);
+      };
+      const url = `${backendUrl}/add-delivery-address`;
+      const response = await axios.post(url, data);
+      setLocations(response.data.locations)
+      setOpenDailog(false);
+      setCustomerName("");
+      setPhoneNumber("");
+      setEmail("");
+      setAddress("");
+      setPincode("");
+      setCountryString("");
+      setStateString("");
+      setCityName("");
+    } 
   };
+
   return (
     <div className="p-8 bg-stone-200 rounded-md">
       <div className="flex flex-col gap-2 mb-4 ">
@@ -53,17 +65,25 @@ const DeliveryForm = ({ setOpenDailog }) => {
         </div>
         <span className="h-[1px] w-full bg-stone-400"></span>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:gap-10 md:grid-cols-2 w-full ">
+      <form
+        className="grid grid-cols-1 gap-4 md:gap-10 md:grid-cols-2 w-full"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col gap-2">
-          <label htmlFor="name" className="font-semibold text-zinc-800 ">
+          <label
+            htmlFor="customerName"
+            className="font-semibold text-zinc-800 "
+          >
             Full name
           </label>
           <input
             type="text"
-            id="name"
+            id="customerName"
             className="pl-2  h-10 text-lg font-semibold text-stone-600 tracking-wide rounded focus:outline-none transition-all duration-500 focus:scale-105 focus:border focus:border-stone-300"
             placeholder="Type here..."
             onChange={(e) => setCustomerName(e.target.value)}
+            required
+            value={customerName}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -76,6 +96,8 @@ const DeliveryForm = ({ setOpenDailog }) => {
             className="pl-2  h-10 text-lg font-semibold text-stone-600 tracking-wide rounded focus:outline-none transition-all duration-500 focus:scale-105 focus:border focus:border-stone-300"
             placeholder="Type here..."
             onChange={(e) => setPhoneNumber(e.target.value)}
+            required
+            value={phoneNumber}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -83,11 +105,13 @@ const DeliveryForm = ({ setOpenDailog }) => {
             Email
           </label>
           <input
-            type="text"
+            type="email"
             id="email"
             className="pl-2  h-10 text-lg font-semibold text-stone-600 tracking-wide rounded focus:outline-none transition-all duration-500 focus:scale-105 focus:border focus:border-stone-300"
             placeholder="Type here..."
             onChange={(e) => setEmail(e.target.value)}
+            required
+            value={email}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -96,18 +120,20 @@ const DeliveryForm = ({ setOpenDailog }) => {
           </label>
           <select
             id="country"
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500"
-            defaultValue="default"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 text-stone-600 font-medium tracking-wide"
             onChange={(e) => {
-              const countryString = e.target.value;
-              const countryArr = countryString.split(",");
+              const countryValue = e.target.value;
+              setCountryString(countryValue)
+              const countryArr = countryValue.split(",");
               const countryCode = countryArr[0];
               const countryname = countryArr[1];
               setCountryIsoCode(countryCode);
               setCountryName(countryname);
             }}
+            required
+            value={countryString}
           >
-            <option value="default" disabled>
+            <option value=""  >
               Select a country
             </option>
             {Country.getAllCountries().map((data, index) => {
@@ -126,18 +152,20 @@ const DeliveryForm = ({ setOpenDailog }) => {
           </label>
           <select
             id="state"
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500"
-            defaultValue="default"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 text-stone-600 font-medium tracking-wide"
             onChange={(e) => {
-              const stateString = e.target.value;
-              const stateArr = stateString.split(",");
+              const stateValue = e.target.value;
+              setStateString(stateValue)
+              const stateArr = stateValue.split(",");
               const stateCode = stateArr[0];
               const stateName = stateArr[1];
               setStateIsoCode(stateCode);
               setStateName(stateName);
             }}
+            required
+            value={stateString}
           >
-            <option value="default" disabled>
+            <option value="" >
               Select a state
             </option>
             {State.getStatesOfCountry(countryIsoCode).map((data, index) => {
@@ -157,10 +185,10 @@ const DeliveryForm = ({ setOpenDailog }) => {
           <select
             id="city"
             onChange={(e) => setCityName(e.target.value)}
-            defaultValue="default"
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 text-stone-600 font-medium tracking-wide"
+            value={cityName}
           >
-            <option value="default" disabled>
+            <option value="" >
               Select a city
             </option>
             {City.getCitiesOfState(countryIsoCode, stateIsoCode).map(
@@ -184,6 +212,8 @@ const DeliveryForm = ({ setOpenDailog }) => {
             className="pl-2 resize-none text-lg font-semibold text-stone-600 tracking-wide rounded focus:outline-none transition-all duration-500 focus:scale-105 focus:border focus:border-stone-300"
             placeholder="Type here..."
             onChange={(e) => setAddress(e.target.value)}
+            required
+            value={address}
           ></textarea>
         </div>
         <div className="flex flex-col gap-4 justify-between md:gap-0 md:py-4">
@@ -197,24 +227,23 @@ const DeliveryForm = ({ setOpenDailog }) => {
               className="pl-2 h-10 text-lg font-semibold text-stone-600 tracking-wide rounded focus:outline-none transition-all duration-500 focus:scale-105 focus:border focus:border-stone-300"
               placeholder="Type here..."
               onChange={(e) => setPincode(e.target.value)}
+              required
+              value={pincode}
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             <button
               onClick={() => setOpenDailog(false)}
-              className="flex items-center justify-center font-semibold gap-2 w-full py-3 rounded text-rose-600 transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none hover:bg-rose-500 hover:text-white"
+              className="font-semibold w-full py-3 rounded bg-red-500 transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none text-white"
             >
-              <FaArrowRightLong className="rotate-180" /> <span>Discard</span>
+              <span>Discard</span>
             </button>
-            <button
-              onClick={handleSubmit}
-              className="flex items-center justify-center font-semibold gap-2 w-full py-3 rounded bg-gradient-to-r from-indigo-500 to-blue-500 text-white transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none "
-            >
+            <button className="flex items-center justify-center font-semibold gap-2 w-full py-3 rounded bg-gradient-to-r from-indigo-500 to-blue-500 text-white transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none ">
               <span>Add Info</span> <FaArrowRightLong />
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
