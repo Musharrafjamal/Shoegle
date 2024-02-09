@@ -27,7 +27,6 @@ const DeliveryForm = ({ setOpenDailog, setLocations }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (countryName !== "" && stateName !== "") {
-      
       const data = {
         idEmail: user?.email,
         customerName,
@@ -41,7 +40,7 @@ const DeliveryForm = ({ setOpenDailog, setLocations }) => {
       };
       const url = `${backendUrl}/add-delivery-address`;
       const response = await axios.post(url, data);
-      setLocations(response.data.locations)
+      setLocations(response.data.locations);
       setOpenDailog(false);
       setCustomerName("");
       setPhoneNumber("");
@@ -51,7 +50,7 @@ const DeliveryForm = ({ setOpenDailog, setLocations }) => {
       setCountryString("");
       setStateString("");
       setCityName("");
-    } 
+    }
   };
 
   return (
@@ -123,7 +122,7 @@ const DeliveryForm = ({ setOpenDailog, setLocations }) => {
             className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 text-stone-600 font-medium tracking-wide"
             onChange={(e) => {
               const countryValue = e.target.value;
-              setCountryString(countryValue)
+              setCountryString(countryValue);
               const countryArr = countryValue.split(",");
               const countryCode = countryArr[0];
               const countryname = countryArr[1];
@@ -133,9 +132,7 @@ const DeliveryForm = ({ setOpenDailog, setLocations }) => {
             required
             value={countryString}
           >
-            <option value=""  >
-              Select a country
-            </option>
+            <option value="">Select a country</option>
             {Country.getAllCountries().map((data, index) => {
               return (
                 <option value={[data.isoCode, data.name]} key={index}>
@@ -155,7 +152,7 @@ const DeliveryForm = ({ setOpenDailog, setLocations }) => {
             className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 text-stone-600 font-medium tracking-wide"
             onChange={(e) => {
               const stateValue = e.target.value;
-              setStateString(stateValue)
+              setStateString(stateValue);
               const stateArr = stateValue.split(",");
               const stateCode = stateArr[0];
               const stateName = stateArr[1];
@@ -165,9 +162,7 @@ const DeliveryForm = ({ setOpenDailog, setLocations }) => {
             required
             value={stateString}
           >
-            <option value="" >
-              Select a state
-            </option>
+            <option value="">Select a state</option>
             {State.getStatesOfCountry(countryIsoCode).map((data, index) => {
               return (
                 <option value={[data.isoCode, data.name]} key={index}>
@@ -188,9 +183,7 @@ const DeliveryForm = ({ setOpenDailog, setLocations }) => {
             className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500 text-stone-600 font-medium tracking-wide"
             value={cityName}
           >
-            <option value="" >
-              Select a city
-            </option>
+            <option value="">Select a city</option>
             {City.getCitiesOfState(countryIsoCode, stateIsoCode).map(
               (data, index) => {
                 return (
@@ -236,7 +229,7 @@ const DeliveryForm = ({ setOpenDailog, setLocations }) => {
               onClick={() => setOpenDailog(false)}
               className="font-semibold w-full py-3 rounded bg-red-500 transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none text-white"
             >
-              <span>Discard</span>
+              Discard
             </button>
             <button className="flex items-center justify-center font-semibold gap-2 w-full py-3 rounded bg-gradient-to-r from-indigo-500 to-blue-500 text-white transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none ">
               <span>Add Info</span> <FaArrowRightLong />

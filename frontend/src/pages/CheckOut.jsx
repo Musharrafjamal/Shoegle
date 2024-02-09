@@ -8,9 +8,10 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RxCross1 } from "react-icons/rx";
 import Footer from "../components/Footer";
+import ConfirmOrder from "../components/ConfirmOrder";
+import { useNavigate } from "react-router-dom"
 
 const CheckOut = () => {
-  const localIdArray = JSON.parse(localStorage.getItem("idArray"));
   const [locations, setLocations] = useState([]);
   const { user, loginWithRedirect } = useAuth0();
   const backendUrl = useSelector((state) => state.backendUrlSlice);
@@ -28,9 +29,13 @@ const CheckOut = () => {
     fetchlocations();
   }, [user]);
   const [openDailog, setOpenDailog] = useState(false);
+  const localIdArray = JSON.parse(localStorage.getItem("idArray"));
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log(locations);
-  }, [locations]);
+    if(localIdArray.length === 0){
+      navigate("/cart");
+    }
+  }, []);
 
   const handleDeleteAddress = async (id) => {
     const deleteAddress = await axios.post(deleteAddressUrl, {
@@ -49,14 +54,14 @@ const CheckOut = () => {
       <Nav />
       <div className="mt-4 mb-8">
         {user === undefined ? (
-          <div className="w-full h-64 flex items-end justify-center">
+          <div className="w-full h-screen flex items-center justify-center">
             <div className="flex flex-col gap-4 items-center">
-              <span className="text-2xl font-semibold text-stone-700">
+              <span className="text-md md:text-2xl font-semibold text-stone-700">
                 You need to login before checkout!
               </span>
               <button
                 onClick={() => loginWithRedirect()}
-                className="flex items-center justify-center font-semibold gap-2 w-2/5 py-3 rounded bg-gradient-to-r from-indigo-500 to-blue-500 text-white transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none "
+                className="flex items-center justify-center font-semibold gap-2 w-fit px-6 py-3 rounded bg-gradient-to-r from-indigo-500 to-blue-500 text-white transition-all duration-500 shadow-lg shadow-stone-400 hover:shadow-none "
               >
                 <span>Login</span> <FaArrowRightLong />
               </button>
@@ -70,27 +75,24 @@ const CheckOut = () => {
               </Link>
               <span className="text-xl font-semibold">Checkout</span>
             </div>
-            <div className="bg-amber-100 md:mx-10 p-6 mt-6 rounded-lg flex flex-col gap-6">
-              <div className="text-xl font-semibold text-center text-stone-700 flex gap-4 flex-col md:flex-row justify-between items-center">
-                <span>Delivery information</span>
-                <div className="flex flex-col md:flex-row gap-4 items-end md:items-center justify-end">
-                  <span className="text-xs text-stone-700 flex items-center gap-1">
-                    Click this button to add a new address that you can’t see up
-                    there.
-                    <FaArrowRightLong className="text-lg rotate-[90deg] md:text-sm md:rotate-0" />
-                  </span>
-                  <button
-                    onClick={() => setOpenDailog(true)}
-                    className="flex items-center justify-center font-semibold gap-2 px-4 py-3 text-sm rounded bg-gradient-to-r from-indigo-500 to-blue-500 text-white transition-all duration-500 hover:-translate-y-1"
-                  >
-                    <span>Add a new address</span>
-                  </button>
-                </div>
+            <div className="bg-amber-50 border md:mx-10 p-6 mt-6 rounded-lg flex flex-col gap-6">
+              <div className="text-xl font-semibold text-center text-stone-700 flex gap-4  md:flex-row justify-between items-center">
+                <span className="whitespace-nowrap text-sm md:text-lg">
+                  Delivery information
+                </span>
+                <button
+                  onClick={() => setOpenDailog(true)}
+                  className="flex items-center justify-center font-semibold gap-2 px-4 py-3 text-xs rounded bg-gradient-to-r from-indigo-500 to-blue-500 whitespace-nowrap text-white transition-all duration-500 hover:-translate-y-1"
+                >
+                  <span>Add a new address</span>
+                </button>
               </div>
               <div className="flex flex-col gap-4">
                 {locations.length === 0 && (
                   <div className="py-24 text-center text-sm text-stone-700 flex gap-1 flex-col sm:flex-row justify-center">
-                    <span className="whitespace-nowrap">No Address found, to create a new address</span>
+                    <span className="whitespace-nowrap">
+                      No Address found, to create a new address
+                    </span>
                     <button
                       onClick={() => setOpenDailog(true)}
                       className="underline font-medium whitespace-nowrap"
@@ -138,9 +140,7 @@ const CheckOut = () => {
         )}
       </div>
       <div
-        className={`absolute top-0 right-0 w-full ${
-          locations.length >= 3 && "h-full"
-        } md:h-full py-8 flex items-center bg-black bg-opacity-50 transition-all duration-500 ${
+        className={`absolute top-0 right-0 w-full z-20 h-full py-8 flex items-center bg-black bg-opacity-50 transition-all duration-500 ${
           openDailog ? "delay-0" : "delay-500"
         }`}
         style={{
@@ -153,7 +153,7 @@ const CheckOut = () => {
             openDailog ? "scale-100" : "scale-0"
           }`}
         >
-          <div className="w-5/6">
+          <div className="md:w-5/6">
             <DeliveryForm
               setOpenDailog={setOpenDailog}
               setLocations={setLocations}
@@ -161,6 +161,7 @@ const CheckOut = () => {
           </div>
         </div>
       </div>
+      {user && <ConfirmOrder />}
       <Footer />
     </div>
   );

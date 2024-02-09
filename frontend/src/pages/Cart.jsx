@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { TiHome } from "react-icons/ti";
+import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 
 const Cart = () => {
   const localIdArray = JSON.parse(localStorage.getItem("idArray"));
@@ -296,8 +297,8 @@ const Cart = () => {
                 to={"/checkout"}
                 className="flex gap-2 items-center justify-center bg-stone-700 py-3 px-4 text-white rounded hover:scale-110 transition-all duration-300"
               >
-                <button>Proceed next</button>
-                <FaArrowLeftLong className=" rotate-180" />
+                <button>Check out</button>
+                <MdOutlineShoppingCartCheckout size={20} />
               </Link>
             </div>
           )}

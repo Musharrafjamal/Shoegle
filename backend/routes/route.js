@@ -122,8 +122,6 @@ router.post("/add-delivery-address", async (req, res) => {
       address,
     });
     const savedInfo = await Info.save();
-    // res.status(201).json(savedInfo);
-    // const addressId = savedInfo._id;
     const availableData = await AllAddressModel.findOne({ idEmail });
     if (availableData) {
       availableData.locations.push(savedInfo);
