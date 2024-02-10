@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom"
 
 const CheckOut = () => {
   const [locations, setLocations] = useState([]);
+  const [choosedLocation, setchoosedLocation] = useState("")
   const { user, loginWithRedirect } = useAuth0();
   const backendUrl = useSelector((state) => state.backendUrlSlice);
   const getAddressUrl = `${backendUrl}/get-address`;
@@ -49,6 +50,9 @@ const CheckOut = () => {
       })
     );
   };
+  useEffect(() => {
+    console.log(choosedLocation)
+  }, [choosedLocation])
   return (
     <div className="relative">
       <Nav />
@@ -116,9 +120,9 @@ const CheckOut = () => {
                       <label className="flex gap-4">
                         <input
                           type="radio"
-                          value={loc}
+                          value={loc._id}
                           name="address"
-                          onChange={(e) => console.log(loc, index)}
+                          onChange={(e) => setchoosedLocation(loc._id)}
                         />
                         <div className="flex flex-col gap-1">
                           <span>Name: {loc.customerName}</span>
@@ -161,7 +165,7 @@ const CheckOut = () => {
           </div>
         </div>
       </div>
-      {user && <ConfirmOrder />}
+      {user && <ConfirmOrder choosedLocation={choosedLocation} />}
       <Footer />
     </div>
   );

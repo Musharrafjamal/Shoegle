@@ -5,7 +5,7 @@ import { IoShieldCheckmark } from "react-icons/io5";
 import { FaPersonHiking } from "react-icons/fa6";
 import { LuBadgeCheck } from "react-icons/lu";
 
-const ConfirmOrder = () => {
+const ConfirmOrder = ({ choosedLocation }) => {
   const localIdArray = JSON.parse(localStorage.getItem("idArray"));
   const backendUrl = useSelector((state) => state.backendUrlSlice);
   const [productArray, setProductArray] = useState([]);
@@ -25,9 +25,19 @@ const ConfirmOrder = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  const [paymentOption, setPaymentOption] = useState("");
   useEffect(() => {
-    // console.log(productArray);
-  }, [productArray]);
+    console.log({ location: choosedLocation, Items: localIdArray, paymentOption });
+  }, [choosedLocation, paymentOption]);
+  const handleConfirmOrder = async () => {
+    const orderUrl = `${backendUrl}/post-order`;
+    const order = await axios.post(orderUrl, {
+      location: choosedLocation,
+      items: productArray,
+      paymentOption,
+    });
+    console.log(order.data);
+  };
 
   return (
     <div className="md:mx-10 mb-8 p-4 rounded-md border border-grey-300 shadow-gray-300 shadow-md flex flex-col gap-4">
@@ -93,20 +103,38 @@ const ConfirmOrder = () => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold text-green-700 text-center md:text-left">Payment options</h2>
+        <h2 className="text-2xl font-semibold text-green-700 text-center md:text-left">
+          Payment options
+        </h2>
         <div className="radio-input justify-end md:justify-start">
           <div>
-              <input value="online" name="value-radio" id="online" type="radio" />
-              <label htmlFor="online" className="flex gap-1 items-center">Pay online <LuBadgeCheck /></label>
+            <input
+              value="online payment"
+              name="value-radio"
+              id="online"
+              type="radio"
+              onChange={(e) => setPaymentOption(e.target.value)}
+            />
+            <label htmlFor="online" className="flex gap-1 items-center">
+              Pay online <LuBadgeCheck />
+            </label>
           </div>
           <div>
-              <input value="cod" name="value-radio" id="cod" type="radio" />
-              <label htmlFor="cod">Cash on delivery <FaPersonHiking /></label>
+            <input
+              value="cash on delivery"
+              name="value-radio"
+              id="cod"
+              type="radio"
+              onChange={(e) => setPaymentOption(e.target.value)}
+            />
+            <label htmlFor="cod">
+              Cash on delivery <FaPersonHiking />
+            </label>
           </div>
         </div>
       </div>
       <div className="flex justify-end">
-        <button className="flex items-center justify-center font-semibold gap-2 px-4 py-3 text-sm rounded bg-gradient-to-r from-indigo-500 to-blue-500 text-white transition-all duration-500 hover:-translate-y-1">
+        <button onClick={handleConfirmOrder} className="flex items-center justify-center font-semibold gap-2 px-4 py-3 text-sm rounded bg-gradient-to-r from-indigo-500 to-blue-500 text-white transition-all duration-500 hover:-translate-y-1">
           <span>Confirm order</span> <IoShieldCheckmark />
         </button>
       </div>

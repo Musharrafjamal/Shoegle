@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const backendUrlSlice = createSlice({
   name: "backendUrlSlice",
-  initialState: "https://shoegle-production.up.railway.app",
+  initialState: "http://localhost:8000",
   reducers: {
     updateBackendUrl: (state, action) => {
       return action.payload; // Assuming the payload is the new URL

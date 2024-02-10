@@ -3,6 +3,7 @@ const ItemModel = require("../model/itemModel");
 const ReviewModel = require("../model/reviewModel");
 const AddressModel = require("../model/addressModel");
 const AllAddressModel = require("../model/allAddress");
+const OrderModel = require("../model/OrderModel");
 const router = express.Router();
 
 router.post("/add-product", async (req, res) => {
@@ -176,6 +177,23 @@ router.post("/get-address", async (req, res) => {
   } catch (err) {
     res.status(500).json({
       error: "Error on adding address information",
+      message: err.message,
+    });
+  }
+});
+router.post("/post-order", async (req, res) => {
+  try {
+    const { location, items, paymentOption } = req.body;
+    const order = new OrderModel({
+      location,
+      items,
+      paymentOption,
+    });
+    const savedInfo = await order.save();
+    res.status(201).json(savedInfo);
+  } catch (err) {
+    res.status(500).json({
+      error: "Error on adding order information",
       message: err.message,
     });
   }
