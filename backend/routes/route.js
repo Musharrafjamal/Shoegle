@@ -183,8 +183,11 @@ router.post("/get-address", async (req, res) => {
 });
 router.post("/post-order", async (req, res) => {
   try {
-    const { location, items, paymentOption } = req.body;
+    const { location, items, paymentOption, orderByEmail, orderByPicture } =
+      req.body;
     const order = new OrderModel({
+      orderByEmail,
+      orderByPicture,
       location,
       items,
       paymentOption,

@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
+  orderByEmail: {
+    type: String,
+    required: true
+  },
+  orderByPicture: {
+    type: String,
+    required: true
+  },
   location: {
     type: String,
     required: true

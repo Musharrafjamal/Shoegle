@@ -51,7 +51,7 @@ const CheckOut = () => {
     );
   };
   useEffect(() => {
-    console.log(choosedLocation)
+    // console.log(choosedLocation)
   }, [choosedLocation])
   return (
     <div className="relative">
@@ -82,7 +82,7 @@ const CheckOut = () => {
             <div className="bg-amber-50 border md:mx-10 p-6 mt-6 rounded-lg flex flex-col gap-6">
               <div className="text-xl font-semibold text-center text-stone-700 flex gap-4  md:flex-row justify-between items-center">
                 <span className="whitespace-nowrap text-sm md:text-lg">
-                  Delivery information
+                  Delivery address
                 </span>
                 <button
                   onClick={() => setOpenDailog(true)}
