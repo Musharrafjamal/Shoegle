@@ -3,6 +3,7 @@ import arrayOfId from "./arrayOfId";
 import itemCounterReducer from "./itemCounterSlice";
 import backendUrlSlice from "./backendUrlSlice";
 import userSlice from "./userSlice";
+import orderIdSlice from "./orderIdSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     arrayOfId,
     backendUrlSlice,
     userSlice,
+    orderId: orderIdSlice,
   },
 });
 

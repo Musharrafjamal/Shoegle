@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import axios from "axios";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { FaPersonHiking } from "react-icons/fa6";
@@ -7,6 +6,10 @@ import { LuBadgeCheck } from "react-icons/lu";
 import { useAuth0 } from "@auth0/auth0-react";
 import { MdError } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { v4 } from "uuid";
+import { useDispatch, useSelector } from "react-redux";
+import { updateOrderId } from "../redux/orderIdSlice";
+import { updateArray } from "../redux/arrayOfId";
 
 const ConfirmOrder = ({ choosedLocation }) => {
   const localIdArray = JSON.parse(localStorage.getItem("idArray"));
@@ -15,10 +18,9 @@ const ConfirmOrder = ({ choosedLocation }) => {
   const [deliveryError, setDeliveryError] = useState(true);
   const [PaymentError, setPaymentError] = useState(true);
   const [disableBtn, setDisableBtn] = useState(true);
-  useEffect(() => {
-    console.log(disableBtn);
-  }, []);
   const { user } = useAuth0();
+  const dispatch = useDispatch();
+
   const fetchData = async () => {
     const fetchDataUrl = `${backendUrl}/get-cart-item`;
     const response = await axios.post(fetchDataUrl, {
@@ -45,16 +47,11 @@ const ConfirmOrder = ({ choosedLocation }) => {
     if (PaymentError === false && deliveryError === false) {
       setDisableBtn(false);
     }
-    // console.log({
-    //   location: choosedLocation,
-    //   Items: localIdArray,
-    //   paymentOption,
-    //   orderByEmail: user.email,
-    //   orderByPicture: user.picture,
-    // });
   }, [choosedLocation, paymentOption, PaymentError, deliveryError]);
+
   const navigate = useNavigate();
   const handleConfirmOrder = async () => {
+    const generateOrderId = v4();
     const orderUrl = `${backendUrl}/post-order`;
     const order = await axios.post(orderUrl, {
       location: choosedLocation,
@@ -62,10 +59,14 @@ const ConfirmOrder = ({ choosedLocation }) => {
       paymentOption,
       orderByEmail: user.email,
       orderByPicture: user.picture,
+      orderId: generateOrderId,
     });
+    dispatch(updateOrderId(generateOrderId));
     console.log(order.data);
     navigate("/order-placed");
-    localStorage.removeItem("idArray");
+    const newArrayOfId = [];
+    dispatch(updateArray(newArrayOfId))
+    localStorage.setItem("idArray", JSON.stringify(newArrayOfId));
   };
 
   return (

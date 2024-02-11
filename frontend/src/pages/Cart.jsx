@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Nav from "../components/Nav";
 import { FaCartShopping } from "react-icons/fa6";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import Footer from "../components/Footer";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -16,7 +16,6 @@ const Cart = () => {
     idArray.length === 0 ? localIdArray : idArray
   );
 
-  const dispatch = useDispatch();
   const backendUrl = useSelector((state) => state.backendUrlSlice);
 
   const btns = [
@@ -36,7 +35,6 @@ const Cart = () => {
   const [loading, setLoading] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
   const getItemUrl = `${backendUrl}/get-cart-item`;
-  const webGetItem = "https://shoegle-production.up.railway.app/get-cart-item";
 
   const fetchItem = async () => {
     try {
