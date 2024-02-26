@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import PrimaryBtn from "./PrimaryBtn";
 import { IoLogOutOutline } from "react-icons/io5";
 import { TiHome } from "react-icons/ti";
-import { MdTrendingUp } from "react-icons/md";
+import { MdDashboard, MdTrendingUp } from "react-icons/md";
 import { FaLightbulb } from "react-icons/fa";
 import { BsFillCollectionFill } from "react-icons/bs";
 
@@ -170,13 +170,16 @@ const Nav = ({ alternate, btns }) => {
             <div
               className={`${
                 isProfileOpen ? "scale-x-125" : "scale-0"
-              } absolute right-0 mt-36 flex flex-col bg-white rounded-lg shadow-md z-10 p-2 border origin-top-right ease-in-out transition-all duration-500`}
+              } absolute right-0 mt-52 flex flex-col bg-white rounded-lg shadow-md z-10 p-2 border origin-top-right ease-in-out transition-all duration-500`}
             >
-              <span className="w-full py-2 rounded-lg text-sm whitespace-nowrap px-2 text-left">
+              <span className="w-full rounded-lg text-sm whitespace-nowrap py-3 px-2 text-left font-semibold">
                 {user.name}
               </span>
+              <Link to={"/dashboard"} className="transition-all duration-500 w-full text-sm ease-in-out font-semibold tracking-wide text-stone-600 whitespace-nowrap hover:bg-stone-600 hover:text-white py-3 px-2 rounded flex items-center justify-start gap-1">
+                Dashboard <MdDashboard />
+              </Link>
               <button
-                className="py-2 flex items-center gap-1 transition-all duration-500 rounded text-sm text-red-600 hover:bg-red-500 hover:text-white px-2 text-left"
+                className="py-3 flex items-center gap-1 transition-all duration-500 rounded text-sm text-red-600 hover:bg-red-500 hover:text-white px-2 text-left"
                 onClick={() => {
                   logout({
                     logoutParams: { returnTo: window.location.origin },

@@ -38,7 +38,8 @@ const ConfirmOrder = ({ choosedLocation }) => {
   }, []);
   const [paymentOption, setPaymentOption] = useState("");
   useEffect(() => {
-    if (choosedLocation !== "") {
+    console.log(choosedLocation)
+    if (Object.keys(choosedLocation).length !== 0) {
       setDeliveryError(false);
     }
     if (paymentOption !== "") {

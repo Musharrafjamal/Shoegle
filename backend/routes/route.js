@@ -208,5 +208,13 @@ router.post("/post-order", async (req, res) => {
     });
   }
 });
+router.get("/get-all-order", async (req, res) => {
+  try {
+    const orders = await OrderModel.find();
+    res.status(200).json(orders);
+  } catch (err) {
+    res.status(404).json("error on getting orders: ", err.message);
+  }
+})
 
 module.exports = router;

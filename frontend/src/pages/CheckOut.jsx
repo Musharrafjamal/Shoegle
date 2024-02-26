@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom"
 
 const CheckOut = () => {
   const [locations, setLocations] = useState([]);
-  const [choosedLocation, setchoosedLocation] = useState("")
+  const [choosedLocation, setchoosedLocation] = useState({})
   const { user, loginWithRedirect } = useAuth0();
   const backendUrl = useSelector((state) => state.backendUrlSlice);
   const getAddressUrl = `${backendUrl}/get-address`;
@@ -122,7 +122,7 @@ const CheckOut = () => {
                           type="radio"
                           value={loc._id}
                           name="address"
-                          onChange={(e) => setchoosedLocation(loc._id)}
+                          onChange={(e) => setchoosedLocation(loc)}
                         />
                         <div className="flex flex-col gap-1">
                           <span>Name: {loc.customerName}</span>

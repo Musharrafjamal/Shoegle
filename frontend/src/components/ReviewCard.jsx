@@ -85,7 +85,7 @@ const ReviewCard = ({ productId, reviews }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12 mb-10">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12 mb-10 px-10">
         {reviewList.map((review, index) => {
           return (
             <div
@@ -128,7 +128,7 @@ const ReviewCard = ({ productId, reviews }) => {
       </div>
       {user !== undefined ? (
         <div>
-          <div className="bg-stone-200 p-6 flex flex-col gap-4 rounded-md relative">
+          <div className="bg-stone-200 md:mx-10 p-6 flex flex-col gap-4 rounded-md relative">
             {uploadReviewLoading ? (
               <div className="h-60 flex justify-center items-center">
                 <div className="loader">
@@ -205,7 +205,7 @@ const ReviewCard = ({ productId, reviews }) => {
                     className="w-full resize-none py-4 rounded-lg focus:outline-none"
                     onChange={(e) => handleAddingReview(e)}
                   ></textarea>
-                  <div className="flex pb-4 gap-2 flex-col sm:flex-row md:flex-col">
+                  <div className="flex md:pb-0 pb-4 gap-2 flex-col sm:flex-row md:flex-col">
                     <label
                       htmlFor="review-img"
                       className="flex items-center justify-center gap-2 bg-blue-600 px-6 py-2 hover:bg-blue-700 hover:scale-95 cursor-pointer transition-all duration-300 text-white text-sm rounded-md whitespace-nowrap"

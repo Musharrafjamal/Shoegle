@@ -88,11 +88,11 @@ const Product = () => {
   }, [idArray]);
 
   return (
-    <div>
+    <div className="overflow-hidden">
       <Nav btns={btns} alternate={true} />
       {fetchItems.length !== 0 ? (
-        <div className="px-10 pb-8 flex flex-col gap-8">
-          <div className="flex flex-col md:flex-row gap-8 overflow-hidden">
+        <div className="pb-8 flex flex-col gap-8">
+          <div className="px-10 flex flex-col md:flex-row gap-8 overflow-hidden">
             <div className="flex flex-col gap-4 w-full md:w-1/2">
               <div className="w-full h-full">
                 {imgLoading && (
@@ -116,14 +116,14 @@ const Product = () => {
               </div>
             </div>
             <div className="w-full md:w-1/2 h-full flex flex-col gap-4">
-              <div className="flex gap-4 w-full">
+              <div className="flex gap-4">
                 {fetchItems.images.map((img, index) => {
                   return (
                     <img
                       key={index}
                       src={img}
                       alt="image"
-                      className="w-20 aspect-square object-cover rounded cursor-pointer"
+                      className="w-14 sm:w-20 aspect-square object-cover rounded cursor-pointer"
                       onClick={() => {
                         setImgLoading(true);
                         setSelectedImg(img);
@@ -158,12 +158,12 @@ const Product = () => {
               </div>
             </div>
           </div>
-          <div className="w-full flex items-center gap-4">
+          <div className="w-full px-10 flex items-center gap-4">
             <span className="h-[1px] w-full bg-stone-400"></span>
             <span>Reviews</span>
             <span className="h-[1px] w-full bg-stone-400"></span>
           </div>
-          <div>
+          <div className="">
             <ReviewCard productId={fetchItems._id} reviews={fetchItems.reviews} />
           </div>
         </div>

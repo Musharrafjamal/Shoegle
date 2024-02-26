@@ -7,6 +7,8 @@ import Product from "./pages/Product";
 import Test from "./pages/Test";
 import CheckOut from "./pages/CheckOut";
 import OrderPlaced from "./pages/OrderPlaced"
+import Dashboard from "./pages/dashboard/Dashboard";
+import AllOrder from "./pages/dashboard/AllOrder";
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/order-placed" element={<OrderPlaced />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/all-orders" element={<AllOrder />} />
         <Route path="/test" element={<Test />} />
       </Routes>
     </>
